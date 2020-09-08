@@ -47,13 +47,13 @@ export default {
           children: [
             {
               icon: "el-icon-location",
-              path: "/test1",
-              name: "test1",
+              path: "/table",
+              name: "Table",
             },
             {
               icon: "el-icon-location",
-              path: "/test2",
-              name: "test2",
+              path: "/form",
+              name: "Form",
             },
           ],
         },

@@ -59,8 +59,10 @@ export default {
       }
     }
     .home-article {
-      flex: 1;
+      box-sizing: border-box;
+      width: calc(100% - 200px);
       border: 10px solid #f5f5f5;
+      padding: 10px;
     }
   }
 }

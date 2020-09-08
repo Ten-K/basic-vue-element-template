@@ -6,8 +6,8 @@ Vue.use(VueRouter)
 const Login = () => import('@/pages/login')
 const Home = () => import('@/pages/home')
 const Index = () => import('@/pages/index')
-const Test1 = () => import('@/pages/test1')
-const Test2 = () => import('@/pages/test2')
+const Table = () => import('@/pages/table')
+const Form = () => import('@/pages/form')
 const Log = () => import('@/pages/log')
 
 const routes = [
@@ -19,8 +19,8 @@ const routes = [
     redirect: "/index",
     children: [
       { path: "/index", component: Index },
-      { path: "/test1", component: Test1 },
-      { path: "/test2", component: Test2 },
+      { path: "/table", component: Table },
+      { path: "/form", component: Form },
       { path: "/log", component: Log }
     ]
   }

@@ -1,0 +1,215 @@
+<template>
+  <div class="home">
+    <!-- 表单部分 -->
+    <!-- 按钮部分 -->
+    <div class="button">
+      <div class="button-left">
+        <div v-for="(i,idx) in ButtonLeft" :key="idx" class="button-left-sub">
+          <el-button size="small" :type="i.type" v-if="i.type" @click="i.onClick">{{i.name}}</el-button>
+          <el-button v-else size="small" @click="i.onClick">{{i.name}}</el-button>
+        </div>
+      </div>
+      <div class="button-right">
+        <div v-for="i in ButtonRight" :key="i.name" class="button-right-sub">
+          <el-button size="small" :type="i.type" v-if="i.type" @click="i.onClick">{{i.name}}</el-button>
+          <el-button size="small" v-else @click="i.onClick">{{i.name}}</el-button>
+        </div>
+      </div>
+    </div>
+    <!-- 表格部分 -->
+    <el-table
+      height="100%"
+      size="mini"
+      :stripe="true"
+      ref="commonTable"
+      :data="tableData"
+      border
+      v-loading="loading"
+      highlight-current-row
+      :span-method="objectSpanMethod?objectSpanMethod1:null"
+      @current-change="handleSelectChange"
+      @selection-change="handleSelectionChange"
+      :row-class-name="tableRowClassName"
+    >
+      <el-table-column v-if="selection && columns.length" type="selection" width="40"></el-table-column>
+      <el-table-column
+        label="序号"
+        type="index"
+        width="50"
+        align="left"
+        v-if="isShowIndex && columns.length"
+        show-overflow-tooltip
+        :resizable="false"
+      >
+        <template slot-scope="scope">
+          <!-- 有分页时，序号显示 -->
+          <span v-if="pageObj">{{(pageObj.currentPage - 1)*pageObj.size + scope.$index + 1}}</span>
+          <!-- 无分页时，序号显示 -->
+          <span v-else>{{scope.$index + 1}}</span>
+        </template>
+      </el-table-column>
+      <template v-for="(col, index) in columns">
+        <!-- 操作列/自定义列 -->
+        <slot v-if="col.slot" :name="col.slot"></slot>
+        <!-- 普通列 -->
+        <el-table-column
+          v-else
+          :key="index"
+          :prop="col.prop"
+          :label="col.label"
+          :width="col.width"
+          :formatter="col.formatter"
+          align="left"
+          show-overflow-tooltip
+          :resizable="false"
+        ></el-table-column>
+      </template>
+    </el-table>
+    <!-- 是否调用分页 -->
+    <el-pagination
+      class="pagination G-center"
+      v-if="pageObj"
+      small
+      background
+      layout="total, sizes,prev, pager, next"
+      :pager-count="5"
+      :page-sizes="pageObj.sizes"
+      :page-size="pageObj.size"
+      :total="pageObj.total"
+      :current-page="pageObj.currentPage"
+      @size-change="handleSizeChange"
+      @current-change="pageObj.func"
+    ></el-pagination>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "dataTable",
+  props: {
+    ButtonRight: {
+      type: Array,
+      default: () => [],
+    },
+    ButtonLeft: {
+      type: Array,
+      default: () => [],
+    },
+    //合并列表方法
+    spanArr: {
+      type: Array,
+      default: () => [],
+    },
+    preTestingGroupsIdx: {
+      type: Number,
+      default: () => 0,
+    },
+    objectSpanMethod: {
+      type: Boolean,
+      default: () => false,
+    },
+    //是否可勾选
+    selection: {
+      type: Boolean,
+      default: () => true,
+    },
+    //列表数据
+    tableData: {
+      type: Array,
+      default: () => [],
+    },
+    //表头
+    columns: {
+      type: Array,
+      default: () => [],
+    },
+    //是否需要序号
+    isShowIndex: {
+      type: Boolean,
+      default: () => false,
+    },
+    //加载
+    loading: {
+      type: Boolean,
+      default: () => false,
+    },
+    //分页组件
+    pageObj: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    handleSelectionChange(val) {
+      this.$emit("handleSelectionChange", val);
+    },
+    handleSizeChange(val) {
+      this.$emit("handleSizeChange", val);
+    },
+    /**
+     * @description: 勾选的数据
+     * @param {val} 
+     * @return {Array} 
+     */
+    handleSelectChange(val) {
+      this.$emit("handleSelectChange", val);
+    },
+    tableRowClassName({ row, rowIndex }) {
+      //根据条件设置行的背景色
+      row.row_index = rowIndex;
+      if (row.status == 0 || row.status == 1) {
+        //未审
+        return "color0";
+      } else if (row.status == 2) {
+        //未印
+        return "color1";
+      }
+    },
+    objectSpanMethod1({ rowIndex, columnIndex }) {
+      if (columnIndex === this.preTestingGroupsIdx + 1) {
+        //this.preTestingGroupsIdx动态设置第几列需要合并 从0开始
+        const _row = this.spanArr[rowIndex]; //需要合并的行数
+        const _col = _row > 0 ? 1 : 0;
+        return {
+          rowspan: _row,
+          colspan: _col,
+        };
+      }
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.home {
+  width: 100%;
+  height: calc(100% - 80px);
+  .button {
+    flex-direction: row;
+    display: flex;
+    margin-bottom: 10px;
+    .button-left {
+      display: flex;
+      flex-direction: row;
+      flex: 8;
+      .button-left-sub:not(:first-child) {
+        margin-left: 10px;
+      }
+    }
+    .button-right {
+      display: flex;
+      flex-direction: row-reverse;
+      flex: 8;
+      .button-right-sub:not(:first-child) {
+        margin-right: 10px;
+      }
+    }
+  }
+  .pagination {
+    width: 100%;
+    height: 45px;
+  }
+}
+</style>
