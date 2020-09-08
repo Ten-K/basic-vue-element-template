@@ -41,19 +41,19 @@
       </el-table-column>
     </commTable>
     <!-- 新建 -->
-    <l-dialog :show.sync="isDialog" :title="dialogTitle" :onConfirm="testonConfirm">
+    <commDialog :show.sync="isDialog" :title="dialogTitle" :onConfirm="testonConfirm">
       <el-input type="text" />
-    </l-dialog>
+    </commDialog>
   </div>
 </template>
 
 <script>
 import commTable from "@/components/CommTable";
-import LDialog from "@/components/LDialog";
+import commDialog from "@/components/CommDialog";
 export default {
   components: {
     commTable,
-    LDialog,
+    commDialog,
   },
   data() {
     return {

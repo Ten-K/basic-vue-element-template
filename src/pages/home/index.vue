@@ -8,7 +8,7 @@
       <aside class="home-aside">
         <saberMenu :isCollapse="isCollapse" />
       </aside>
-      <article class="home-article">
+      <article :class="{'home-article': true, 'home-article-nocollapse': !isShow, 'home-article-collapse': isShow}">
         <router-view></router-view>
       </article>
     </main>
@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       isCollapse: false,
+      isShow:false
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
@@ -36,6 +37,9 @@ export default {
   methods: {
     onclickCollapse(headerIsCollapse) {
       this.isCollapse = headerIsCollapse;
+      this.$nextTick(()=>{
+        this.isShow = this.isCollapse
+      })
     },
   },
 };
@@ -53,16 +57,16 @@ export default {
     width: 100%;
     height: calc(100% - 45px);
     display: flex;
-    .home-aside {
-      .isCollapse {
-        margin-left: 50px;
-      }
-    }
     .home-article {
-      box-sizing: border-box;
-      width: calc(100% - 200px);
       border: 10px solid #f5f5f5;
       padding: 10px;
+    }
+    .home-article-nocollapse{
+      transition: width 1s;
+      width: calc(100% - 200px);
+    }
+    .home-article-collapse{
+      width: calc(100% - 64px);
     }
   }
 }
