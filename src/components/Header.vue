@@ -4,7 +4,10 @@
     <div class="home-left">公共头部</div>
     <div class="home-right">
       <i class="el-icon-s-fold home-icon" @click="onclickCollapse"></i>
-      <div class="login-out" @click="loginOut">退出登录</div>
+      <div class="G-center">
+        <div class="G-mgr-5">{{username}}</div>
+        <div class="login-out" @click="loginOut">退出登录</div>
+      </div>
     </div>
   </div>
 </template>
@@ -20,11 +23,14 @@ export default {
   },
   data() {
     return {
-      headerIsCollapse:false
+      headerIsCollapse:false,
+      username:''
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
-  created() {},
+  created() {
+    this.username = this.$_.get('username')
+  },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
   methods: {

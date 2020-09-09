@@ -54,18 +54,19 @@ export default {
     border-bottom: 2px solid #f5f5f5;
   }
   .home-main {
+    display: flex;
     width: 100%;
     height: calc(100% - 45px);
-    display: flex;
     .home-article {
       border: 10px solid #f5f5f5;
       padding: 10px;
     }
     .home-article-nocollapse{
-      transition: width 1s;
+      flex: 1;
       width: calc(100% - 200px);
     }
     .home-article-collapse{
+      flex: 1;
       width: calc(100% - 64px);
     }
   }

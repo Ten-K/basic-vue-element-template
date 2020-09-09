@@ -19,8 +19,8 @@ const routes = [
     redirect: "/index",
     children: [
       { path: "/index", component: Index },
-      { path: "/table", component: Table },
-      { path: "/form", component: Form },
+      { path: "/components/table", component: Table },
+      { path: "/components/form", component: Form },
       { path: "/log", component: Log }
     ]
   }

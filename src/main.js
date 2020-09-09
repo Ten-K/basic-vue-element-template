@@ -4,9 +4,11 @@ import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue'
 import router from './router'
 import 'default-passive-events'
+import _ from '@/utils'
 
 Vue.use(ElementUI);
 
+Vue.prototype.$_ = _
 Vue.config.productionTip = false
 
 

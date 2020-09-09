@@ -6,7 +6,6 @@
       @close="$emit('update:show', false)"
       :show="show"
     >
-      <span>this is a dialog.</span>
       <slot></slot>
       <span slot="footer" class="dialog-footer">
         <el-button @click="visible = false">取 消</el-button>

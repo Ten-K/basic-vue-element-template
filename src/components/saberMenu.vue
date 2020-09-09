@@ -42,17 +42,17 @@ export default {
       menuConfig: [
         {
           icon: "el-icon-platform-eleme",
-          path: "/test",
-          name: "test",
+          path: "/components",
+          name: "components",
           children: [
             {
               icon: "el-icon-location",
-              path: "/table",
+              path: "/components/table",
               name: "Table",
             },
             {
               icon: "el-icon-location",
-              path: "/form",
+              path: "/components/form",
               name: "Form",
             },
           ],

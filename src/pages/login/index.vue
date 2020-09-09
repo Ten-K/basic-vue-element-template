@@ -48,12 +48,9 @@ export default {
   created() {
     self = this;
     //勾选记住我，显示上次输入的账号密码
-    if(localStorage.getItem('loginInfo')){
-      let loginInfo = JSON.parse(localStorage.getItem('loginInfo'))
-      let {username,password} = loginInfo
-      self.ruleForm.username = username
-      self.ruleForm.password = password
-    }
+    if(!self.$_.get('password')) return
+    self.ruleForm.username = self.$_.get('username')
+    self.ruleForm.password = self.$_.get('password')
   },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {
@@ -64,15 +61,13 @@ export default {
     submitForm(formName) {
         self.$refs[formName].validate((valid) => {
           if (valid) {
-            if(self.ruleForm.username === "123" && self.ruleForm.password === "123"){
+            if(self.ruleForm.username === 123 && self.ruleForm.password === 123){
               self.$router.push('/home')
               if(self.remember){
-                localStorage.setItem('loginInfo',JSON.stringify({  
-                  username:self.ruleForm.username,
-                  password:self.ruleForm.password
-                }))
+                self.$_.set('username',self.ruleForm.username)
+                self.$_.set('password',self.ruleForm.password)
               }else{
-                localStorage.removeItem('loginInfo')
+                self.$_.remove('password',self.ruleForm.password)
               }
             }else{
               return self.$message({ message: "账号或密码", type: "error" })

@@ -42,7 +42,17 @@
     </commTable>
     <!-- 新建 -->
     <commDialog :show.sync="isDialog" :title="dialogTitle" :onConfirm="testonConfirm">
-      <el-input type="text" />
+      <el-form ref="form" :model="form" label-width="80px" size="small">
+        <el-form-item label="活动名称">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="活动区域">
+          <el-select v-model="form.region" placeholder="请选择活动区域">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
     </commDialog>
   </div>
 </template>
@@ -57,13 +67,15 @@ export default {
   },
   data() {
     return {
-      ButtonLeft: [{ type: "primary", name: "新增", onClick: this.newOrEditDialog }],
+      ButtonLeft: [
+        { type: "primary", name: "新增", onClick: this.newOrEditDialog },
+      ],
       ButtonRight: [
         { type: "danger", name: "批量删除", onClick: this.deleteRows },
       ],
       tableData: [
         { operateContent: "测试1", username: "1", creationTime: "2020-09-08" },
-        { operateContent: "测试2", username: "2", creationTime: "2020-09-08" }
+        { operateContent: "测试2", username: "2", creationTime: "2020-09-08" },
       ],
       columns: [
         { label: "操作内容", prop: "operateContent" },
@@ -81,7 +93,11 @@ export default {
         },
       },
       isDialog: false,
-      dialogTitle:"新增"
+      dialogTitle: "新增",
+      form: {
+        name: "",
+        region: "",
+      },
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
@@ -89,14 +105,20 @@ export default {
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
   methods: {
+    onSubmit() {
+      console.log("submit!");
+    },
     //点击Dialog确认按钮
-    testonConfirm(){
-      this.isDialog = false
+    testonConfirm() {
+      this.isDialog = false;
+      console.log(this.form)
     },
     //点击新增或编辑按钮
     newOrEditDialog(title) {
-      this.isDialog = true
-      Object.prototype.toString.call(title) === '[object String]' ? this.dialogTitle = title : this.dialogTitle = "新增"
+      this.isDialog = true;
+      Object.prototype.toString.call(title) === "[object String]"
+        ? (this.dialogTitle = title)
+        : (this.dialogTitle = "新增");
     },
     //勾选的数据
     handleSelectionChange(val) {
