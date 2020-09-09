@@ -3,7 +3,10 @@
   <div class="home">
     <div class="home-left">公共头部</div>
     <div class="home-right">
-      <i class="el-icon-s-fold home-icon" @click="onclickCollapse"></i>
+      <div class="G-center">
+        <i class="el-icon-s-fold home-icon" @click="onclickCollapse"></i>
+        <i class="el-icon-s-home home-icon G-mgl-5" @click="goHome" title="首页"></i>
+      </div>
       <div class="G-center">
         <div class="G-mgr-5">{{username}}</div>
         <div class="login-out" @click="loginOut">退出登录</div>
@@ -37,6 +40,9 @@ export default {
     onclickCollapse(){
       this.headerIsCollapse = !this.isCollapse
       this.$emit('onclickCollapse',this.headerIsCollapse)
+    },
+    goHome(){
+      this.$router.push('/index')
     },
     loginOut(){
       this.$router.push('/login')

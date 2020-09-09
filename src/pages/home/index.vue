@@ -6,7 +6,7 @@
     </header>
     <main class="home-main">
       <aside class="home-aside">
-        <saberMenu :isCollapse="isCollapse" />
+        <saberMenu :isCollapse="isCollapse" :menuList="menuList"/>
       </aside>
       <article :class="{'home-article': true, 'home-article-nocollapse': !isShow, 'home-article-collapse': isShow}">
         <router-view></router-view>
@@ -18,6 +18,7 @@
 <script>
 import saberMenu from "@/components/saberMenu";
 import Header from "@/components/Header";
+import menu from "@/common/menu";
 export default {
   name: "home",
   components: {
@@ -27,7 +28,8 @@ export default {
   data() {
     return {
       isCollapse: false,
-      isShow:false
+      isShow:false,
+      menuList:menu
     };
   },
   //生命周期 - 创建完成（访问当前this实例）

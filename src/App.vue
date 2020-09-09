@@ -34,6 +34,9 @@ html,body{
 .G-mgr-5{
   margin-right: 5px;
 }
+.G-mgl-5{
+  margin-left: 5px;
+}
 /* 水平垂直居中 */
 .G-center{
     display: flex;
