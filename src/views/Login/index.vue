@@ -9,6 +9,7 @@
         label-width="100px"
         class="demo-ruleForm"
         label-position="left"
+        v-enterJump
       >
         <el-form-item label="账号" prop="username">
           <el-input v-model="ruleForm.username" placeholder="123" @keyup.enter.native="submitForm('ruleForm')" v-focus></el-input>
@@ -61,7 +62,7 @@ export default {
     submitForm(formName) {
         self.$refs[formName].validate((valid) => {
           if (valid) {
-            if(self.ruleForm.username === 123 && self.ruleForm.password === 123){
+            if(self.ruleForm.username == 123 && self.ruleForm.password == 123){
               self.$router.push('/home')
               if(self.remember){
                 self.$_.set('username',self.ruleForm.username)
@@ -70,7 +71,7 @@ export default {
                 self.$_.remove('password',self.ruleForm.password)
               }
             }else{
-              return self.$message({ message: "账号或密码", type: "error" })
+              return self.$message({ message: "账号或密码错误", type: "error" })
             }
           } else {
             console.log("error submit!!");

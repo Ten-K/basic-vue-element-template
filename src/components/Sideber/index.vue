@@ -21,7 +21,7 @@
             <span slot="title">{{itm.title}}</span>
           </el-menu-item> -->
           <!--递归调用自身-->
-          <saber-menu :menuList="item.children" :isAddClass="true"></saber-menu>
+          <Sideber :menuList="item.children" :isAddClass="true"></Sideber>
         </el-submenu>
         <el-menu-item v-else :index="item.href" :key="idx">
           <i :class="item.icon"></i>
@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: "saberMenu",
+  name: "Sideber",
   props: {
     isCollapse: {
       type: Boolean,
@@ -74,7 +74,6 @@ export default {
 };
 </script>
 <style scoped>
-/* @import url(); 引入css类 */
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
 }

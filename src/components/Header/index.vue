@@ -42,7 +42,7 @@ export default {
       this.$emit('onclickCollapse',this.headerIsCollapse)
     },
     goHome(){
-      this.$router.push('/index')
+      this.$router.push('/home')
     },
     loginOut(){
       this.$router.push('/login')
@@ -51,29 +51,5 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-/* @import url(); 引入css类 */
-.home{
-  display: flex;
-  align-items: center;
-  .home-left{
-    width: 200px;
-    height: 45px;
-    text-align: center;
-    line-height: 45px;
-  }
-  .home-right{
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-    .home-icon{
-      font-size: 25px;
-    }
-    .home-icon:hover,.login-out:hover{
-      cursor: pointer;
-      color: cornflowerblue;
-    }
-  }
-}
+@import './index.scss';
 </style>

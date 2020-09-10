@@ -6,9 +6,9 @@
     </header>
     <main class="home-main">
       <aside class="home-aside">
-        <saberMenu :isCollapse="isCollapse" :menuList="menuList"/>
+        <Sideber :isCollapse="isCollapse" :menuList="menuList"/>
       </aside>
-      <article :class="{'home-article': true, 'home-article-nocollapse': !isShow, 'home-article-collapse': isShow}">
+      <article :class="{'home-article': true, 'home-article-nocollapse': !isCollapse, 'home-article-collapse': isCollapse}">
         <router-view></router-view>
       </article>
     </main>
@@ -16,19 +16,18 @@
 </template>
 
 <script>
-import saberMenu from "@/components/saberMenu";
+import Sideber from "@/components/Sideber";
 import Header from "@/components/Header";
-import menu from "@/common/menu";
+import menu from "@/assets/js/menu";
 export default {
   name: "home",
   components: {
-    saberMenu,
+    Sideber,
     Header,
   },
   data() {
     return {
       isCollapse: false,
-      isShow:false,
       menuList:menu
     };
   },
@@ -39,15 +38,11 @@ export default {
   methods: {
     onclickCollapse(headerIsCollapse) {
       this.isCollapse = headerIsCollapse;
-      this.$nextTick(()=>{
-        this.isShow = this.isCollapse
-      })
     },
   },
 };
 </script>
 <style scoped lang="scss">
-/* @import url(); 引入css类 */
 .home {
   width: 100%;
   height: 100%;
@@ -68,7 +63,7 @@ export default {
       width: calc(100% - 200px);
     }
     .home-article-collapse{
-      flex: 1;
+      transition: width 0.31s;
       width: calc(100% - 64px);
     }
   }

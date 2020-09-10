@@ -1,6 +1,6 @@
 const menu = [
   {
-    icon: "el-icon-platform-eleme",
+    icon: "el-icon-menu",
     path: "components",
     title: "components",
     children: [
@@ -17,12 +17,12 @@ const menu = [
     ],
   },
   {
-    icon: "el-icon-location",
-    path: "log",
-    title: "log",
+    icon: "el-icon-menu",
+    path: "enterjump",
+    title: "enterJump",
   },
   {
-    icon: "el-icon-setting",
+    icon: "el-icon-menu",
     path: "test",
     title: "test",
   },

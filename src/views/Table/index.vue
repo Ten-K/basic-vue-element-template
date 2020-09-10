@@ -1,7 +1,7 @@
-<!-- table封装 -->
+<!-- CommTable/CommDialog组件测试 -->
 <template>
   <div class="G-home">
-    <commTable
+    <CommTable
       :tableData="tableData"
       :columns="columns"
       :pageObj="pageObj"
@@ -39,39 +39,68 @@
           </el-popconfirm>
         </template>
       </el-table-column>
-    </commTable>
-    <!-- 新建 -->
-    <commDialog :show.sync="isDialog" :title="dialogTitle" :onConfirm="testonConfirm">
-      <el-form ref="form" :model="form" label-width="80px" size="small">
-        <el-form-item label="活动名称">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-    </commDialog>
+    </CommTable>
+    <!-- 新建/编辑/测试/删除测试 -->
+    <CommDialog :show.sync="isDialog" :title="dialogTitle" :onConfirm="testonConfirm">
+        <el-form ref="form" :model="form" label-width="80px" size="small" v-show="dialogTitle === '新增' || dialogTitle ==='编辑'">
+          <el-form-item label="活动名称">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item label="活动区域">
+            <el-select v-model="form.region" placeholder="请选择活动区域">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <h1 v-show="dialogTitle === '测试' || dialogTitle ==='删除测试'">测试/删除测试</h1>
+    </CommDialog>
   </div>
 </template>
 
 <script>
-import commTable from "@/components/CommTable";
-import commDialog from "@/components/CommDialog";
+let self
+import CommTable from "@/components/CommTable";
+import CommDialog from "@/components/CommDialog";
 export default {
   components: {
-    commTable,
-    commDialog,
+    CommTable,
+    CommDialog,
   },
   data() {
     return {
+      //Table组件info
       ButtonLeft: [
-        { type: "primary", name: "新增", onClick: this.newOrEditDialog },
+        {
+          type: "primary",
+          name: "新增",
+          onClick: () => {
+            this.newOrEditDialog("新增");
+          },
+        },
+        {
+          type: "primary",
+          name: "测试",
+          onClick: () => {
+            this.newOrEditDialog("测试");
+          },
+        },
       ],
       ButtonRight: [
-        { type: "danger", name: "批量删除", onClick: this.deleteRows },
+        {
+          type: "danger",
+          name: "批量删除",
+          onClick: () => {
+            this.deleteRows("批量删除");
+          },
+        },
+        {
+          type: "danger",
+          name: "删除测试",
+          onClick: () => {
+            this.newOrEditDialog("删除测试");
+          },
+        },
       ],
       tableData: [
         { operateContent: "测试1", username: "1", creationTime: "2020-09-08" },
@@ -93,6 +122,7 @@ export default {
         },
       },
       isDialog: false,
+      //Dialog组件info
       dialogTitle: "新增",
       form: {
         name: "",
@@ -101,24 +131,27 @@ export default {
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
-  created() {},
+  created() {
+    self = this
+  },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
   methods: {
     onSubmit() {
       console.log("submit!");
     },
+    pageTurning(currentPage){
+      console.log(currentPage)
+    },
     //点击Dialog确认按钮
     testonConfirm() {
-      this.isDialog = false;
-      console.log(this.form)
+      self.isDialog = false;
     },
     //点击新增或编辑按钮
-    newOrEditDialog(title) {
-      this.isDialog = true;
-      Object.prototype.toString.call(title) === "[object String]"
-        ? (this.dialogTitle = title)
-        : (this.dialogTitle = "新增");
+    newOrEditDialog(title = null) {
+      self.dialogTitle = title;
+      self.isDialog = true;
+      console.log(self.dialogTitle)
     },
     //勾选的数据
     handleSelectionChange(val) {
@@ -126,26 +159,26 @@ export default {
     },
     //删除
     deleteRow() {
-      this.$message({
+      self.$message({
         message: "删除成功",
         type: "success",
       });
     },
     //批量删除
     deleteRows() {
-      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+      self.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
         .then(() => {
-          this.$message({
+          self.$message({
             type: "success",
             message: "删除成功!",
           });
         })
         .catch(() => {
-          this.$message({
+          self.$message({
             type: "info",
             message: "已取消删除",
           });

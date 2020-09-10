@@ -61,7 +61,6 @@
           :formatter="col.formatter"
           align="left"
           show-overflow-tooltip
-          :resizable="false"
         ></el-table-column>
       </template>
     </el-table>
@@ -183,33 +182,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.home {
-  width: 100%;
-  height: calc(100% - 80px);
-  .button {
-    flex-direction: row;
-    display: flex;
-    margin-bottom: 10px;
-    .button-left {
-      display: flex;
-      flex-direction: row;
-      flex: 8;
-      .button-left-sub:not(:first-child) {
-        margin-left: 10px;
-      }
-    }
-    .button-right {
-      display: flex;
-      flex-direction: row-reverse;
-      flex: 8;
-      .button-right-sub:not(:first-child) {
-        margin-right: 10px;
-      }
-    }
-  }
-  .pagination {
-    width: 100%;
-    height: 45px;
-  }
-}
+@import './index'
 </style>

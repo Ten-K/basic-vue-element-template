@@ -1,6 +1,7 @@
+<!-- commForm组件测试 -->
 <template>
   <div class="baseInfo">
-    <commForm
+    <CommForm
       class="searchInput"
       labelWidth="100px"
       ref="searchForm"
@@ -11,10 +12,11 @@
   </div>
 </template>
 <script>
-import commForm from "@/components/CommForm";
+let self
+import CommForm from "@/components/CommForm";
 export default {
   components: {
-    commForm
+    CommForm
   },
   data() {
     let caseState = [
@@ -115,6 +117,9 @@ export default {
       name:null
     };
   },
+  created(){
+    self = this
+  },
   methods: {
     //搜索, 重置表单:初始化搜索
     search(val){
@@ -124,7 +129,7 @@ export default {
       console.log(row)
     },
     changeSex(row){
-      this.seachInfo.sex = row
+      self.seachInfo.sex = row
     },
     // 下拉选择分公司，查询部门数据
     changeCompany(row) {

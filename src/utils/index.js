@@ -3,7 +3,7 @@
  * @Author: Lrl
  * @Date: 2020-09-09 09:51:50
  * @LastEditors: Lrl
- * @LastEditTime: 2020-09-09 10:25:20
+ * @LastEditTime: 2020-09-10 16:20:16
  */
 
 let utils = {
@@ -19,7 +19,14 @@ let utils = {
   // 删除数据
   remove(key) {
     localStorage.removeItem(key);
-  }
+  },
+  //判断对象是否存在
+  isEmptyObject(obj) {
+    if (obj === undefined || obj === null || (typeof obj === 'string' && obj.trim() === '')) {
+      return true
+    }
+    return false
+  },
 
 }
 
