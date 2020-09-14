@@ -38,7 +38,9 @@ export default {
     };
     return {
       // 如果数据要回显后不可编辑，使用JSON.parse(JSON.stringify())转换
-      searchData: {},
+      searchData: {
+        
+      },
       searchForm: [
         {
           type: "Daterange",

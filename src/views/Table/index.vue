@@ -7,6 +7,10 @@
       :pageObj="pageObj"
       :ButtonLeft="ButtonLeft"
       :ButtonRight="ButtonRight"
+      :spanArr="spanArr"
+      :spanArrTwo="spanArrTwo"
+      :preTestingGroupsIdx="1"
+      :objectSpanMethod="true"
       @handleSelectionChange="handleSelectionChange"
     >
       <el-table-column
@@ -105,6 +109,8 @@ export default {
       tableData: [
         { operateContent: "测试1", username: "1", creationTime: "2020-09-08" },
         { operateContent: "测试2", username: "2", creationTime: "2020-09-08" },
+        { operateContent: "测试3", username: "1", creationTime: "2020-09-14" },
+        { operateContent: "测试4", username: "1", creationTime: "2020-09-14" },
       ],
       columns: [
         { label: "操作内容", prop: "operateContent" },
@@ -128,11 +134,16 @@ export default {
         name: "",
         region: "",
       },
+      spanArr:[],
+      pos:0,
+      spanArrTwo:[],
+      posTwo:0,
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {
     self = this
+    self.getSpanArr()
   },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
@@ -142,6 +153,40 @@ export default {
     },
     pageTurning(currentPage){
       console.log(currentPage)
+    },
+    //因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
+    getSpanArr() {
+      self.spanArr = [];
+      self.spanArrTwo = [];
+      for (var i = 0; i < self.tableData.length; i++) {
+        if (i === 0) {
+          // 如果是第一条记录（即索引是0的时候），向数组中加入１
+          self.spanArr.push(1);
+          self.spanArrTwo.push(1);
+          self.pos = 0;
+          self.posTwo=0;
+        } else {
+          if (self.tableData[i].username === self.tableData[i - 1].username) {
+            // 如果useName相等就累加，并且push 0
+            self.spanArr[self.pos] += 1;
+            self.spanArr.push(0);
+          } else {
+            // 不相等push 1
+            self.spanArr.push(1);
+            self.pos = i;
+          }
+          if (self.tableData[i].creationTime === self.tableData[i - 1].creationTime) {
+            // 如果creationTime相等就累加，并且push 0
+            self.spanArrTwo[self.posTwo] += 1;
+            self.spanArrTwo.push(0);
+          } else {
+            // 不相等push 1
+            self.spanArrTwo.push(1);
+            self.posTwo = i;
+          }
+        }
+      }
+      // console.log(self.spanArr,self.spanArrTwo)
     },
     //点击Dialog确认按钮
     testonConfirm() {

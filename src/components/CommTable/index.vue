@@ -99,6 +99,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    spanArrTwo: {
+      type: Array,
+      default: () => [],
+    },
     preTestingGroupsIdx: {
       type: Number,
       default: () => 0,
@@ -171,6 +175,14 @@ export default {
       if (columnIndex === this.preTestingGroupsIdx + 1) {
         //this.preTestingGroupsIdx动态设置第几列需要合并 从0开始
         const _row = this.spanArr[rowIndex]; //需要合并的行数
+        const _col = _row > 0 ? 1 : 0;
+        return {
+          rowspan: _row,
+          colspan: _col,
+        };
+      }
+      if (columnIndex === this.preTestingGroupsIdx + 2) {
+        const _row = this.spanArrTwo[rowIndex]; 
         const _col = _row > 0 ? 1 : 0;
         return {
           rowspan: _row,

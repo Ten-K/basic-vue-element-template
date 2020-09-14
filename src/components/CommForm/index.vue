@@ -7,6 +7,7 @@
       :rules="rules"
       ref="searchForm"
       :label-width="labelWidth"
+      v-enterJump
     >
       <el-form-item
         v-for="item in searchForm"
@@ -42,6 +43,8 @@
           v-model="searchData[item.prop]"
           @change="item.change(searchData[item.prop])"
           @visible-change="$forceUpdate()"
+          :name="item.prop"
+          :ref="item.prop"
         >
           <el-option
             v-for="op in item.options"

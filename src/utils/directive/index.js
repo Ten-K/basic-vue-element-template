@@ -8,13 +8,18 @@ Vue.directive("enterJump", {
         if (ev.keyCode === 13) {
           let index = i
           if (element[index].type == "text") {
-            //如果是下拉选择框则需要添加相同的name和ref
-            if (element[index].name == "select") {
-              setTimeout(() => {
-                //vnode.context相当于this
-                console.log(element[index])
-                vnode.context.$refs[element[index].name].blur()
-              }, 100);
+            //如果是下拉选择框则需要添加相同的name和ref  
+            if (element[index].getAttribute('readonly')) {
+              //   //vnode.context相当于this
+              if(Array.isArray(vnode.context.$refs[element[index].name])){
+                setTimeout(() => {
+                  vnode.context.$refs[element[index].name][0].blur()
+                }, 100);
+              }else{
+                setTimeout(() => {
+                  vnode.context.$refs[element[index].name].blur()
+                }, 100);
+              }
             }
             while (element[index].disabled) {
               index++

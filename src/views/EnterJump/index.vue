@@ -2,22 +2,27 @@
 <template>
   <div>
     <h1>回车可跳转到下一个输入框</h1>
-    <hr style="margin:20px 0"/>
+    <hr style="margin:20px 0" />
     <el-form ref="form" :model="form" label-width="80px" v-enterJump size="small">
       <el-form-item label="活动名称">
         <el-input v-model="form.name" v-focus></el-input>
       </el-form-item>
       <el-form-item label="活动名称">
-        <el-input ></el-input>
+        <el-input></el-input>
       </el-form-item>
       <el-form-item label="活动区域">
-        <el-select v-model="form.region" placeholder="请选择活动区域" name="select" ref="select">
+        <el-select
+          v-model="form.region"
+          placeholder="请选择活动区域"
+          name="select"
+          ref="select"
+        >
           <el-option label="区域一" value="shanghai"></el-option>
           <el-option label="区域二" value="beijing"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="活动名称">
-        <el-input ></el-input>
+        <el-input></el-input>
       </el-form-item>
       <el-form-item label="活动性质">
         <el-checkbox-group v-model="form.type">
