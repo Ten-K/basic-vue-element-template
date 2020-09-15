@@ -50,6 +50,7 @@
 </template>
 
 <script>
+// let self
 export default {
   name: "long",
   data() {
@@ -67,7 +68,9 @@ export default {
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
-  created() {},
+  created() {
+    // self = this
+  },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
   methods: {
