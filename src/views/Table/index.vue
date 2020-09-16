@@ -8,9 +8,7 @@
       :ButtonLeft="ButtonLeft"
       :ButtonRight="ButtonRight"
       :spanArr="spanArr"
-      :spanArrTwo="spanArrTwo"
-      :preTestingGroupsIdx="1"
-      :objectSpanMethod="true"
+      :preTestingGroupsIdx="3"
       @handleSelectionChange="handleSelectionChange"
     >
       <el-table-column
@@ -137,16 +135,16 @@ export default {
       },
       spanArr: [],
       pos: 0,
-      spanArrTwo: [],
-      posTwo: 0,
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {
     self = this;
     self.$api.tableApi.tableList().then((res) => {
-        self.tableData = res.data;
-        self.getSpanArr()
+        if(res){
+          self.tableData = res.data
+          self.getSpanArr()
+        }
     });
   },
   //生命周期 - 挂载完成（访问DOM元素）
@@ -161,35 +159,23 @@ export default {
     //因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArr() {
       self.spanArr = [];
-      self.spanArrTwo = [];
       for (var i = 0; i < self.tableData.length; i++) {
         if (i === 0) {
           // 如果是第一条记录（即索引是0的时候），向数组中加入１
           self.spanArr.push(1);
-          self.spanArrTwo.push(1);
           self.pos = 0;
-          self.posTwo = 0;
         } else {
-          if (self.tableData[i].username === self.tableData[i - 1].username) {
-            // 如果useName相等就累加，并且push 0
+          if (
+            self.tableData[i].creationTime ===
+            self.tableData[i - 1].creationTime
+          ) {
+            // 如果creationTime相等就累加，并且push 0
             self.spanArr[self.pos] += 1;
             self.spanArr.push(0);
           } else {
             // 不相等push 1
             self.spanArr.push(1);
             self.pos = i;
-          }
-          if (
-            self.tableData[i].creationTime ===
-            self.tableData[i - 1].creationTime
-          ) {
-            // 如果creationTime相等就累加，并且push 0
-            self.spanArrTwo[self.posTwo] += 1;
-            self.spanArrTwo.push(0);
-          } else {
-            // 不相等push 1
-            self.spanArrTwo.push(1);
-            self.posTwo = i;
           }
         }
       }
@@ -203,7 +189,6 @@ export default {
     newOrEditDialog(title = null) {
       self.dialogTitle = title;
       self.isDialog = true;
-      console.log(self.dialogTitle);
     },
     //勾选的数据
     handleSelectionChange(val) {

@@ -26,7 +26,7 @@
       border
       v-loading="loading"
       highlight-current-row
-      :span-method="objectSpanMethod?objectSpanMethod1:null"
+      :span-method="!spanArr.length ? null : objectSpanMethod"
       @current-change="handleSelectChange"
       @selection-change="handleSelectionChange"
       :row-class-name="tableRowClassName"
@@ -107,10 +107,6 @@ export default {
       type: Number,
       default: () => 0,
     },
-    objectSpanMethod: {
-      type: Boolean,
-      default: () => false,
-    },
     //是否可勾选
     selection: {
       type: Boolean,
@@ -154,35 +150,25 @@ export default {
     },
     /**
      * @description: 勾选的数据
-     * @param {val} 
-     * @return {Array} 
+     * @param {val}
+     * @return {Array}
      */
     handleSelectChange(val) {
       this.$emit("handleSelectChange", val);
     },
     tableRowClassName({ row, rowIndex }) {
-      //根据条件设置行的背景色
-      row.row_index = rowIndex;
-      if (row.status == 0 || row.status == 1) {
-        //未审
-        return "color0";
-      } else if (row.status == 2) {
-        //未印
-        return "color1";
-      }
+      //添加行序号
+      row.index = rowIndex;
+      //根据条件设置行的字体颜色
+      // if (row.username == '1' ) {
+      //   return "color1";
+      // } else if (row.username == '2') {
+      //   return "color2";
+      // }
     },
-    objectSpanMethod1({ rowIndex, columnIndex }) {
-      if (columnIndex === this.preTestingGroupsIdx + 1) {
-        //this.preTestingGroupsIdx动态设置第几列需要合并 从0开始
+    objectSpanMethod({ rowIndex, columnIndex }) {
+      if (columnIndex === this.preTestingGroupsIdx) {
         const _row = this.spanArr[rowIndex]; //需要合并的行数
-        const _col = _row > 0 ? 1 : 0;
-        return {
-          rowspan: _row,
-          colspan: _col,
-        };
-      }
-      if (columnIndex === this.preTestingGroupsIdx + 2) {
-        const _row = this.spanArrTwo[rowIndex]; 
         const _col = _row > 0 ? 1 : 0;
         return {
           rowspan: _row,
@@ -194,5 +180,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import './index'
+@import "./index";
 </style>
