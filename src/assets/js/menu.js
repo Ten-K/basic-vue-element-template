@@ -23,8 +23,8 @@ const menu = [
   },
   {
     icon: "el-icon-menu",
-    path: "test",
-    title: "test",
+    path: "verificationCode",
+    title: "verificationCode",
   },
 ]
 

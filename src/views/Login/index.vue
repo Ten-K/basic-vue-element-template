@@ -29,7 +29,7 @@
 <script>
 let self;
 export default {
-  name: "",
+  name: "login",
   data() {
     return {
       ruleForm: {

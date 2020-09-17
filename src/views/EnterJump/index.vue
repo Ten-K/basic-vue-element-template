@@ -52,7 +52,7 @@
 <script>
 // let self
 export default {
-  name: "long",
+  name: "enterjump",
   data() {
     return {
       form: {

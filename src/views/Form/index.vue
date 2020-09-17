@@ -18,6 +18,7 @@ export default {
   components: {
     CommForm
   },
+  name:"elform",
   data() {
     let caseState = [
       { label: "男", value: 1 },

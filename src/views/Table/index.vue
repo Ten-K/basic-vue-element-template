@@ -75,6 +75,7 @@ export default {
     CommTable,
     CommDialog,
   },
+  name:"eltable",
   data() {
     return {
       //Table组件info

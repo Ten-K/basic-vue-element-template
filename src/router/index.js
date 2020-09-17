@@ -15,7 +15,7 @@ const Home = () => import('@/views/Home')
 const Table = () => import('@/views/Table')
 const Form = () => import('@/views/Form')
 const EnterJump = () => import('@/views/EnterJump')
-const Test = () => import('@/views/Test')
+const VerificationCode = () => import('@/views/VerificationCode')
 
 const routes = [
   { path: '/', component: Login },
@@ -26,10 +26,10 @@ const routes = [
     redirect: "/home",
     children: [
       { path: "/home", name:'home', component: Home },
-      { path: "/components/table", name:'table', component: Table },
-      { path: "/components/form", name:'form', component: Form },
-      { path: "/enterjump", name:'log', component: EnterJump },
-      { path: "/test", name:'test', component: Test }
+      { path: "/components/table", name:'eltable', component: Table },
+      { path: "/components/form", name:'elform', component: Form },
+      { path: "/enterjump", name:'enterjump', component: EnterJump },
+      { path: "/verificationCode", name:'verificationCode', component: VerificationCode }
     ]
   }
 ]
