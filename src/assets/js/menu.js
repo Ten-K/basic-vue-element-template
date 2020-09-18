@@ -26,6 +26,11 @@ const menu = [
     path: "verificationCode",
     title: "verificationCode",
   },
+  {
+    icon: "el-icon-menu",
+    path: "simulationVuex",
+    title: "simulationVuex",
+  },
 ]
 
 menu.forEach((item) => {

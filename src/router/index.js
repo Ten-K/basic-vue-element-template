@@ -16,6 +16,7 @@ const Table = () => import('@/views/Table')
 const Form = () => import('@/views/Form')
 const EnterJump = () => import('@/views/EnterJump')
 const VerificationCode = () => import('@/views/VerificationCode')
+const simulationVuex = () => import('@/views/simulationVuex')
 
 const routes = [
   { path: '/', component: Login },
@@ -29,7 +30,8 @@ const routes = [
       { path: "/components/table", name:'eltable', component: Table },
       { path: "/components/form", name:'elform', component: Form },
       { path: "/enterjump", name:'enterjump', component: EnterJump },
-      { path: "/verificationCode", name:'verificationCode', component: VerificationCode }
+      { path: "/verificationCode", name:'verificationCode', component: VerificationCode },
+      { path: "/simulationVuex", name:'simulationVuex', component: simulationVuex }
     ]
   }
 ]

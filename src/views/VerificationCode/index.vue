@@ -1,11 +1,17 @@
-<!--  -->
+<!-- 验证码页面 -->
 <template>
   <div class="G-home">
     <el-input class="input G-mgr-5" v-model="randomNumber"></el-input>
     <el-button @click="start">生成6位不重复的随机数</el-button>
-    <hr class="G-mgt-5" />
-    <div class="G-flex G-mgt-5 verification-box">
-      <el-input placeholder="请输入验证码" class="input G-mgr-5" v-model="code"></el-input>
+    <hr class="G-mgtb-5" />
+    <div class="G-flex verification-box">
+      <el-input 
+        placeholder="请输入验证码" 
+        maxlength="4"
+        class="input G-mgr-5" 
+        v-model="code"
+        @keyup.enter.native="finish">
+      </el-input>
       <div @click="refreshCode">
         <Sidentify :identifyCode="identifyCode" class="verification G-mgr-5" />
       </div>
@@ -57,25 +63,25 @@ export default {
     },
     //完成验证
     finish() {
-      if(self.$_.isEmptyObject(self.code)){
+      if (self.$_.isEmptyObject(self.code)) {
         self.$message({
           showClose: true,
           message: "请填写验证码",
           type: "warning",
-        })
-        return
-      }else if(self.code == self.identifyCode){
+        });
+        return;
+      } else if (self.code == self.identifyCode) {
         self.$message({
           showClose: true,
           message: "验证成功",
           type: "success",
-        })
-      }else{
+        });
+      } else {
         self.$message({
           showClose: true,
           message: "验证码错误",
           type: "error",
-        })
+        });
       }
     },
     start() {
