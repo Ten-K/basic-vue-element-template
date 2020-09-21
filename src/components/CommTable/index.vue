@@ -27,7 +27,7 @@
       v-loading="loading"
       highlight-current-row
       :span-method="!spanArr.length ? null : objectSpanMethod"
-      @current-change="handleSelectChange"
+      @current-change="handleClick"
       @selection-change="handleSelectionChange"
       :row-class-name="tableRowClassName"
     >
@@ -39,7 +39,6 @@
         align="left"
         v-if="isShowIndex && columns.length"
         show-overflow-tooltip
-        :resizable="false"
       >
         <template slot-scope="scope">
           <!-- 有分页时，序号显示 -->
@@ -142,19 +141,16 @@ export default {
     return {};
   },
   methods: {
+    //勾选的数据
     handleSelectionChange(val) {
       this.$emit("handleSelectionChange", val);
     },
+    //点击某一行返回行数据
+    handleClick(val) {
+      this.$emit("handleClick", val);
+    },
     handleSizeChange(val) {
       this.$emit("handleSizeChange", val);
-    },
-    /**
-     * @description: 勾选的数据
-     * @param {val}
-     * @return {Array}
-     */
-    handleSelectChange(val) {
-      this.$emit("handleSelectChange", val);
     },
     tableRowClassName({ row, rowIndex }) {
       //添加行序号
@@ -166,6 +162,7 @@ export default {
       //   return "color2";
       // }
     },
+    //合并列
     objectSpanMethod({ rowIndex, columnIndex }) {
       if (columnIndex === this.preTestingGroupsIdx) {
         const _row = this.spanArr[rowIndex]; //需要合并的行数

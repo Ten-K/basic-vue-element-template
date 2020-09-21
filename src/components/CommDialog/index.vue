@@ -7,7 +7,7 @@
       :show="show"
     >
       <slot></slot>
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer" class="dialog-footer" v-if="isShowFooter">
         <el-button @click="visible = false">取 消</el-button>
         <el-button type="primary" @click="onConfirm">确 定</el-button>
       </span>
@@ -34,6 +34,10 @@ export default {
     onConfirm:{
       type: Function,
       default: ()=>{},
+    },
+    isShowFooter:{
+      type: Boolean,
+      default: true,
     }
   },
   watch: {

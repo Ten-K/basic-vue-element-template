@@ -17,9 +17,10 @@
       >
         <!-- 输入框 -->
         <el-input
+          clearable
           v-if="item.type === 'Input'"
           v-model="searchData[item.prop]"
-          @input="item.input(searchData[item.prop])"
+          @input="item.input ? item.input(searchData[item.prop]) : '' "
           :placeholder="item.placeholder"
         ></el-input>
 
@@ -41,7 +42,7 @@
         <el-select
           v-if="item.type === 'Select'"
           v-model="searchData[item.prop]"
-          @change="item.change(searchData[item.prop])"
+          @change="item.change ? item.change(searchData[item.prop]) : '' "
           @visible-change="$forceUpdate()"
           :name="item.prop"
           :ref="item.prop"

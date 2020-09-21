@@ -3,7 +3,7 @@
  * @Author: Lrl
  * @Date: 2020-09-09 09:51:50
  * @LastEditors: Lrl
- * @LastEditTime: 2020-09-10 16:20:16
+ * @LastEditTime: 2020-09-21 12:01:29
  */
 
 let utils = {
@@ -27,6 +27,13 @@ let utils = {
     }
     return false
   },
+  //格式化时间
+  formatTime(time) {
+    var d = new Date(time);
+    var times = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + 
+            d.getDate()
+    return times;
+  }
 
 }
 

@@ -1,6 +1,14 @@
 <!-- CommTable/CommDialog组件测试 -->
 <template>
   <div class="G-home">
+    <CommForm
+      class="searchInput"
+      labelWidth="100px"
+      ref="searchForm"
+      :searchData="searchData"
+      :searchForm="searchForm"
+      @search="search"
+    ></CommForm>
     <CommTable
       :tableData="tableData"
       :columns="columns"
@@ -10,16 +18,19 @@
       :spanArr="spanArr"
       :preTestingGroupsIdx="3"
       @handleSelectionChange="handleSelectionChange"
+      @handleClick="handleClick"
     >
+      <el-table-column slot="username" label="操作人" align="left" width="200" show-overflow-tooltip>
+        <template slot-scope="scope">{{scope.row.username === 1 ? 'lrl' : 'test'}}</template>
+      </el-table-column>
       <el-table-column
-        slot="username"
-        label="操作人"
+        slot="createTime"
+        label="操作时间"
         align="left"
         width="200"
-        :resizable="false"
         show-overflow-tooltip
       >
-        <template slot-scope="scope">{{scope.row.username === '1' ? 'lrl' : 'test'}}</template>
+        <template slot-scope="scope">{{scope.row.createTime | formatTime}}</template>
       </el-table-column>
       <el-table-column
         slot="test"
@@ -35,7 +46,7 @@
             icon="el-icon-info"
             iconColor="red"
             title="确定删除吗？"
-            @onConfirm="deleteRow(scope.row)"
+            @onConfirm="deleteRow(scope.row.userid)"
           >
             <el-button type="danger" size="mini" slot="reference">删除</el-button>
           </el-popconfirm>
@@ -43,24 +54,28 @@
       </el-table-column>
     </CommTable>
     <!-- 新建/编辑/测试/删除测试 -->
-    <CommDialog :show.sync="isDialog" :title="dialogTitle" :onConfirm="testonConfirm">
+    <CommDialog :show.sync="isDialog" :title="dialogTitle" :isShowFooter="false">
       <el-form
-        ref="form"
         :model="form"
         label-width="80px"
         size="small"
         v-show="dialogTitle === '新增' || dialogTitle ==='编辑'"
       >
-        <el-form-item label="活动名称">
-          <el-input v-model="form.name"></el-input>
+        <el-form-item label="操作内容">
+          <el-input v-model="form.operateContent"></el-input>
         </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+        <el-form-item label="操作人">
+          <el-select v-model="form.username" placeholder="请选择操作人">
+            <el-option label="lrl" :value="1"></el-option>
+            <el-option label="test" :value="2"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSave(dialogTitle)">确认</el-button>
+          <el-button @click="isDialog = false">取消</el-button>
+        </el-form-item>
       </el-form>
+
       <h1 v-show="dialogTitle === '测试' || dialogTitle ==='删除测试'">测试/删除测试</h1>
     </CommDialog>
   </div>
@@ -70,15 +85,37 @@
 let self;
 import CommTable from "@/components/CommTable";
 import CommDialog from "@/components/CommDialog";
+import CommForm from "@/components/CommForm";
 export default {
   components: {
     CommTable,
     CommDialog,
+    CommForm,
   },
-  name:"eltable",
+  name: "eltable",
   data() {
+    let caseState = [
+      { label: "lrl", value: 1 },
+      { label: "test", value: 2 }
+    ];
+    let entrustProps = { label: "label", value: "value" };
     return {
+      //表单info
+      searchData: {
+        
+      },
+      searchForm: [
+        {
+          type: "Select",
+          prop: "keyword",
+          // 渲染数组
+          options: caseState,
+          // 下拉转换
+          props: entrustProps
+        }
+      ],
       //Table组件info
+      selectList: [],
       ButtonLeft: [
         {
           type: "primary",
@@ -115,7 +152,7 @@ export default {
       columns: [
         { label: "操作内容", prop: "operateContent" },
         { slot: "username" },
-        { label: "操作时间", prop: "creationTime" },
+        { slot: "createTime" },
         { slot: "test" },
       ],
       pageObj: {
@@ -131,28 +168,45 @@ export default {
       //Dialog组件info
       dialogTitle: "新增",
       form: {
-        name: "",
-        region: "",
+        index: 0,
+        userid: -1,
+        username: -1,
+        operateContent: "",
+        createTime: "",
       },
       spanArr: [],
       pos: 0,
     };
   },
+  filters: {
+    formatTime: function (time) {
+      let d = new Date(time);
+      let times =
+        d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      return times;
+    },
+  },
   //生命周期 - 创建完成（访问当前this实例）
   created() {
     self = this;
-    self.$api.tableApi.tableList().then((res) => {
-        if(res){
-          self.tableData = res.data
-          self.getSpanArr()
-        }
-    });
+    self.getTableList();
   },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
   methods: {
-    onSubmit() {
-      console.log("submit!"); 
+    //搜索
+    search(val){
+      self.getTableList(val);
+    },
+    //获取列表数据
+    getTableList(val = null) {
+      self.$api.tableApi.tableList(val).then((res) => {
+        self.tableData = [];
+        if (res) {
+          self.tableData = res.data;
+          self.getSpanArr();
+        }
+      });
     },
     pageTurning(currentPage) {
       console.log(currentPage);
@@ -167,10 +221,10 @@ export default {
           self.pos = 0;
         } else {
           if (
-            self.tableData[i].creationTime ===
-            self.tableData[i - 1].creationTime
+            self.$_.formatTime(self.tableData[i].createTime) ===
+            self.$_.formatTime(self.tableData[i - 1].createTime)
           ) {
-            // 如果creationTime相等就累加，并且push 0
+            // 如果createTime相等就累加，并且push 0
             self.spanArr[self.pos] += 1;
             self.spanArr.push(0);
           } else {
@@ -180,48 +234,111 @@ export default {
           }
         }
       }
-      // console.log(self.spanArr,self.spanArrTwo)
-    },
-    //点击Dialog确认按钮
-    testonConfirm() {
-      self.isDialog = false;
+      // console.log(self.spanArr)
     },
     //点击新增或编辑按钮
     newOrEditDialog(title = null) {
+      if (title === "新增") {
+        self.form = {
+          operateContent: "",
+          username: "",
+        };
+      }
       self.dialogTitle = title;
       self.isDialog = true;
     },
+    onSave(title) {
+      let { operateContent, username } = self.form;
+      let obj = {
+        operateContent,
+        username,
+      };
+      if (title === "新增") {
+        self.$api.tableApi.tableAdd(obj).then((res) => {
+          if (res) {
+            self.getTableList();
+            self.$message({
+              type: "success",
+              message: "添加成功",
+            });
+            self.isDialog = false;
+          }
+        });
+      } else {
+        let { userid } = self.form;
+        obj.userid = userid;
+        self.$api.tableApi.tableUpdata(obj).then((res) => {
+          if (res) {
+            self.getTableList();
+            self.$message({
+              type: "success",
+              message: "编辑成功",
+            });
+            self.isDialog = false;
+          }
+        });
+      }
+    },
     //勾选的数据
     handleSelectionChange(val) {
-      console.log(val);
+      self.selectList = val;
+    },
+    //点击行
+    handleClick(val) {
+      if (val) {
+        Object.keys(val).forEach((key) => {
+          self.form[key] = val[key];
+        });
+      }
     },
     //删除
-    deleteRow() {
-      self.$message({
-        message: "删除成功",
-        type: "success",
+    deleteRow(userid) {
+      self.$api.tableApi.tableDelete({ userid }).then((res) => {
+        if (res) {
+          self.getTableList();
+          self.$message({
+            message: "删除成功",
+            type: "success",
+          });
+        }
       });
     },
     //批量删除
     deleteRows() {
-      self
-        .$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+      if (self.selectList.length == 0) {
+        self.$message({
+          message: "请选择需要删除的数据",
           type: "warning",
-        })
-        .then(() => {
-          self.$message({
-            type: "success",
-            message: "删除成功!",
-          });
-        })
-        .catch(() => {
-          self.$message({
-            type: "info",
-            message: "已取消删除",
-          });
         });
+      } else {
+        let ids = [];
+        self.selectList.forEach((i) => {
+          ids.push(i.userid);
+        });
+        self
+          .$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning",
+          })
+          .then(() => {
+            self.$api.tableApi.tableDeletes({ ids }).then((res) => {
+              if (res) {
+                self.getTableList();
+                self.$message({
+                  message: "删除成功",
+                  type: "success",
+                });
+              }
+            });
+          })
+          .catch(() => {
+            self.$message({
+              type: "info",
+              message: "已取消删除",
+            });
+          });
+      }
     },
   },
 };
