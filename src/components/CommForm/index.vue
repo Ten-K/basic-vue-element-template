@@ -131,10 +131,10 @@
         ></el-cascader>
       </el-form-item>
       <el-form-item class="search_input_button" v-if="isHandle">
-        <el-button type="primary" @click="search">
+        <el-button type="primary" icon="el-icon-search" @click="search">
           搜索
         </el-button>
-        <el-button type="primary" @click="search('重置')">
+        <el-button type="primary" icon="el-icon-refresh" @click="search('重置')">
           重置
         </el-button>
       </el-form-item>
@@ -204,3 +204,5 @@ export default {
   }
 };
 </script>
+<style lang="scss" scope>
+</style>

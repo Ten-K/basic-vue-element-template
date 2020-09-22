@@ -57,6 +57,7 @@ export default {
     .home-article {
       border: 10px solid #f5f5f5;
       padding: 10px;
+      min-width: 960px;
     }
     .home-article-nocollapse{
       flex: 1;

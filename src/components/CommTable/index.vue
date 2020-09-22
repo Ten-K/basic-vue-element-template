@@ -64,20 +64,20 @@
       </template>
     </el-table>
     <!-- 是否调用分页 -->
-    <el-pagination
-      class="pagination G-center"
-      v-if="pageObj"
-      small
-      background
-      layout="total, sizes,prev, pager, next"
-      :pager-count="5"
-      :page-sizes="pageObj.sizes"
-      :page-size="pageObj.size"
-      :total="pageObj.total"
-      :current-page="pageObj.currentPage"
-      @size-change="handleSizeChange"
-      @current-change="pageObj.func"
-    ></el-pagination>
+    <div class="pagination">
+      <el-pagination
+        v-if="pageObj"
+        background
+        layout=" total,prev, pager, next, sizes, jumper"
+        :pager-count="5"
+        :page-sizes="pageObj.sizes"
+        :page-size="pageObj.size"
+        :total="pageObj.total"
+        :current-page="pageObj.currentPage"
+        @size-change="handleSizeChange"
+        @current-change="pageObj.func"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 

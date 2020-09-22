@@ -32,7 +32,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(response => {
   setTimeout(() => {
     loading.close();
-  }, 500);
+  }, 300);
   // 在这里你可以判断后台返回数据携带的请求码
   if (response.data.code === 0 || response.data.code === '0') {
     return response.data.data || response.data

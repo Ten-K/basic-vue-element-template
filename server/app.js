@@ -148,7 +148,7 @@ app.post('/table/deletes', function (req, res) {
 
 //table模块查询
 app.get('/table/list', function (req, res) {
-  // 查询tableList表, 没有数据库时，可注释data: JSON.stringify(data)，使用上面的data数据
+  // 查询tableList表, 没有数据库时，可注释data，使用上面的data数据
   let searchSql
   if(req.query.keyword){
     searchSql = `SELECT * FROM tableList WHERE username in (${req.query.keyword})`

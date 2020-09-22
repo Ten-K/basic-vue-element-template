@@ -1,15 +1,17 @@
-<!-- CommTable/CommDialog组件测试 -->
+<!-- CommForm/CommTable/CommDialog组件测试 -->
 <template>
   <div class="G-home">
-    <CommForm
-      class="searchInput"
-      labelWidth="100px"
-      ref="searchForm"
-      :searchData="searchData"
-      :searchForm="searchForm"
-      @search="search"
-    ></CommForm>
-    <CommTable
+    <header class="home-header">
+      <CommForm
+        labelWidth="100px"
+        ref="searchForm"
+        :searchData="searchData"
+        :searchForm="searchForm"
+        @search="search"
+      ></CommForm>
+    </header>
+    <main class="home-container">
+      <CommTable
       :tableData="tableData"
       :columns="columns"
       :pageObj="pageObj"
@@ -53,6 +55,7 @@
         </template>
       </el-table-column>
     </CommTable>
+    </main>
     <!-- 新建/编辑/测试/删除测试 -->
     <CommDialog :show.sync="isDialog" :title="dialogTitle" :isShowFooter="false">
       <el-form
@@ -168,7 +171,7 @@ export default {
       //Dialog组件info
       dialogTitle: "新增",
       form: {
-        index: 0,
+        index: -1,
         userid: -1,
         username: -1,
         operateContent: "",
@@ -194,7 +197,7 @@ export default {
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
   methods: {
-    //搜索
+    //搜索/重置
     search(val){
       self.getTableList(val);
     },
@@ -247,6 +250,7 @@ export default {
       self.dialogTitle = title;
       self.isDialog = true;
     },
+    //确认新增或确认编辑
     onSave(title) {
       let { operateContent, username } = self.form;
       let obj = {
@@ -343,6 +347,20 @@ export default {
   },
 };
 </script>
-<style scoped>
-/* @import url(); 引入css类 */
+<style lang="scss" scoped>
+.home-header{
+  padding: 10px 20px;
+  border: 1px solid #e4e4e4;
+  margin-bottom: 10px;
+  /deep/.el-form-item--small.el-form-item {
+    margin-bottom: 0;
+  }
+}
+.home-container{
+  width: 100%;
+  height: calc(100% - 67px);
+  background-color: #fff;
+  padding: 10px 20px 0;
+  border: 1px solid #e4e4e4;
+}
 </style>
