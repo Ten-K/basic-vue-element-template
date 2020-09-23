@@ -43,6 +43,7 @@ export default {
     },
     goHome(){
       this.$router.push('/home')
+      this.$_.remove('infolist')
     },
     loginOut(){
       this.$router.push('/login')

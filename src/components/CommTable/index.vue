@@ -98,10 +98,6 @@ export default {
       type: Array,
       default: () => [],
     },
-    spanArrTwo: {
-      type: Array,
-      default: () => [],
-    },
     preTestingGroupsIdx: {
       type: Number,
       default: () => 0,

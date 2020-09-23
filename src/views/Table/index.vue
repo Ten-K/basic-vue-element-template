@@ -348,19 +348,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.home-header{
-  padding: 10px 20px;
-  border: 1px solid #e4e4e4;
-  margin-bottom: 10px;
-  /deep/.el-form-item--small.el-form-item {
-    margin-bottom: 0;
-  }
-}
-.home-container{
-  width: 100%;
-  height: calc(100% - 67px);
-  background-color: #fff;
-  padding: 10px 20px 0;
-  border: 1px solid #e4e4e4;
-}
+@import "./index";
 </style>

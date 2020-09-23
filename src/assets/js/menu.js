@@ -31,6 +31,11 @@ const menu = [
     path: "simulationVuex",
     title: "simulationVuex",
   },
+  {
+    icon: "el-icon-menu",
+    path: "ws",
+    title: "webSocket",
+  },
 ]
 
 menu.forEach((item) => {

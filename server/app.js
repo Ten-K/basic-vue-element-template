@@ -1,9 +1,5 @@
 const { json } = require('express');
 let express = require('express');//引入express模块
-/* 
-*引入mysql部分代码----后期添加数据库使用
-*
-*/
 const mysql = require("mysql");
 
 let app = express();
