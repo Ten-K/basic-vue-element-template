@@ -18,6 +18,7 @@ const EnterJump = () => import('@/views/EnterJump')
 const VerificationCode = () => import('@/views/VerificationCode')
 const SimulationVuex = () => import('@/views/simulationVuex')
 const Ws = () => import('@/views/Websocket')
+const Export = () => import('@/views/Export')
 
 const routes = [
   { path: '/', component: Login },
@@ -33,7 +34,8 @@ const routes = [
       { path: "/enterjump", name:'enterjump', component: EnterJump },
       { path: "/verificationCode", name:'verificationCode', component: VerificationCode },
       { path: "/simulationVuex", name:'simulationVuex', component: SimulationVuex },
-      { path: "/ws", name:'ws', component: Ws }
+      { path: "/ws", name:'ws', component: Ws },
+      { path: "/export", name:'export', component: Export },
     ]
   }
 ]

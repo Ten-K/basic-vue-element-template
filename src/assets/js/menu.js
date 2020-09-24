@@ -36,6 +36,11 @@ const menu = [
     path: "ws",
     title: "webSocket",
   },
+  {
+    icon: "el-icon-menu",
+    path: "export",
+    title: "export",
+  },
 ]
 
 menu.forEach((item) => {

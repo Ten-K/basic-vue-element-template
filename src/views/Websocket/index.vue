@@ -2,11 +2,15 @@
 <template>
   <div class="G-home">
     <div class="content" ref="box">
-      <div v-for="(item,index) in list" :class="[item.type,'msg-item']" :key="index">
-        <p>{{item.content}}</p>
+      <div
+        v-for="(item, index) in list"
+        :class="[item.type, 'msg-item']"
+        :key="index"
+      >
+        <p>{{ item.content }}</p>
       </div>
     </div>
-    <el-input class="G-mgtb-5" type="text" v-model="contentText"></el-input>
+    <el-input class="G-mgtb-5" type="text" v-model="contentText" @keyup.enter.native="sendText"></el-input>
     <el-button @click="sendText">发送</el-button>
   </div>
 </template>
@@ -24,7 +28,8 @@ export default {
   //生命周期 - 创建完成（访问当前this实例）
   created() {
     self = this;
-    self.list = self.$_.get('infolist')
+    if (self.$_.isEmptyObject(self.$_.get("infolist"))) return;
+    self.list = self.$_.get("infolist");
   },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
@@ -53,7 +58,7 @@ export default {
         };
         ws.onmessage = function (e) {
           self.list = [...self.list, { type: "robot", content: e.data }];
-          self.$_.set('infolist',self.list)
+          self.$_.set("infolist", self.list);
         };
       }
     },

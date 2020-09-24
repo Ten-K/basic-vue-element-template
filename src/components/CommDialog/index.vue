@@ -9,7 +9,7 @@
       <slot></slot>
       <span slot="footer" class="dialog-footer" v-if="isShowFooter">
         <el-button @click="visible = false">取 消</el-button>
-        <el-button type="primary" @click="onConfirm">确 定</el-button>
+        <el-button type="primary" @click="onConfirm">{{onConfirmBtnName}}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -38,6 +38,10 @@ export default {
     isShowFooter:{
       type: Boolean,
       default: true,
+    },
+    onConfirmBtnName:{
+      type: String,
+      default: '确 定',
     }
   },
   watch: {
