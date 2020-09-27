@@ -1,11 +1,12 @@
 <!-- 验证码页面 -->
 <template>
   <div class="G-home">
-    <el-input class="input G-mgr-5" v-model="randomNumber"></el-input>
+    <el-input class="input G-mgr-5" v-model="randomNumber" clearable></el-input>
     <el-button @click="start">生成6位不重复的随机数</el-button>
     <hr class="G-mgtb-5" />
     <div class="G-flex verification-box">
       <el-input 
+        clearable
         placeholder="请输入验证码" 
         maxlength="4"
         class="input G-mgr-5" 

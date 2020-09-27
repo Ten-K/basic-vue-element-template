@@ -10,7 +10,12 @@
         <p>{{ item.content }}</p>
       </div>
     </div>
-    <el-input class="G-mgtb-5" type="text" v-model="contentText" @keyup.enter.native="sendText"></el-input>
+    <el-input
+      class="G-mgtb-5"
+      type="text"
+      v-model="contentText"
+      @keyup.enter.native="sendText"
+    ></el-input>
     <el-button @click="sendText">发送</el-button>
   </div>
 </template>
@@ -52,6 +57,10 @@ export default {
         };
         ws.onclose = function (e) {
           console.log("服务器关闭");
+          self.$message({
+            type: "warning",
+            message: "请启动WebSocket服务",
+          });
         };
         ws.onerror = function () {
           console.log("服务器出错");

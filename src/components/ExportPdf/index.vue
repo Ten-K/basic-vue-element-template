@@ -286,6 +286,8 @@ export default {
               a4Width,
               (a4Width / canvas1.width) * height
             );
+            //添加页脚
+            pdf.text(104,295,`${index - 1}`)
             leftHeight -= height;
             position += height;
             if (leftHeight > 0) {

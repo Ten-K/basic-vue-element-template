@@ -97,11 +97,11 @@ node ws
 ```
 ## Function
 1. 封装了常用的el-table,el-form,el-dialog,el-pagination等组件，用于减少代码量，提高开发效率。 
-2. components文件夹下的ExportPdf文件具有html转pdf并下载的功能，支持分页。 
+2. components文件夹下的ExportPdf文件具有html转pdf并下载的功能，支持分页（由前端实现pdf导出可减轻服务器负担）。 
 3. 封装axios并挂载到vue实例上全局使用,具有请求拦截和响应拦截功能。
 4. 在vue.config.js文件配置了反向代理用于解决跨域问题。
 5. 已有指令：
-    1. v-enterJump:  用于回车跳转到下一个输入框  
+    1. v-enterJump:  用于回车跳转到下一个输入框  (不能跳转时间控件)
     2. v-focus:  用于进入页面聚焦到某一个输入框
 
 ## Project setup
