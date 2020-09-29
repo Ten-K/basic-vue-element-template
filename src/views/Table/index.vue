@@ -18,7 +18,7 @@
       :ButtonLeft="ButtonLeft"
       :ButtonRight="ButtonRight"
       :spanArr="spanArr"
-      :preTestingGroupsIdx="3"
+      :mergeColumns="3"
       @handleSelectionChange="handleSelectionChange"
       @handleClick="handleClick"
     >
@@ -123,6 +123,7 @@ export default {
         {
           type: "primary",
           name: "新增",
+          icon: "el-icon-plus",
           onClick: () => {
             this.newOrEditDialog("新增");
           },
@@ -139,6 +140,7 @@ export default {
         {
           type: "danger",
           name: "批量删除",
+          icon:"el-icon-delete",
           onClick: () => {
             this.deleteRows("批量删除");
           },

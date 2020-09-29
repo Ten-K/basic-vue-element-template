@@ -31,11 +31,11 @@ const routes = [
       { path: "/home", name:'home', component: Home },
       { path: "/components/table", name:'eltable', component: Table },
       { path: "/components/form", name:'elform', component: Form },
+      { path: "/components/export", name:'export', component: Export },
       { path: "/enterjump", name:'enterjump', component: EnterJump },
       { path: "/verificationCode", name:'verificationCode', component: VerificationCode },
       { path: "/simulationVuex", name:'simulationVuex', component: SimulationVuex },
       { path: "/ws", name:'ws', component: Ws },
-      { path: "/export", name:'export', component: Export },
     ]
   }
 ]

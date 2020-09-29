@@ -14,6 +14,11 @@ const menu = [
         path: "form",
         title: "Form",
       },
+      {
+        icon: "",
+        path: "export",
+        title: "Export",
+      },
     ],
   },
   {
@@ -35,11 +40,6 @@ const menu = [
     icon: "el-icon-menu",
     path: "ws",
     title: "webSocket",
-  },
-  {
-    icon: "el-icon-menu",
-    path: "export",
-    title: "export",
   },
 ]
 

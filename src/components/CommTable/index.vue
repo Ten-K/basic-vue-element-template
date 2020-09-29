@@ -4,15 +4,13 @@
     <!-- 按钮部分 -->
     <div class="button">
       <div class="button-left">
-        <div v-for="(i,idx) in ButtonLeft" :key="idx" class="button-left-sub">
-          <el-button size="small" :type="i.type" v-if="i.type" @click="i.onClick">{{i.name}}</el-button>
-          <el-button v-else size="small" @click="i.onClick">{{i.name}}</el-button>
+        <div v-for="i in ButtonLeft" :key="i.name" class="button-left-sub">
+          <el-button size="small" :type="i.type" @click="i.onClick" v-if="!i.hide" :icon="i.icon ? i.icon : ''">{{i.name}}</el-button>
         </div>
       </div>
       <div class="button-right">
         <div v-for="i in ButtonRight" :key="i.name" class="button-right-sub">
-          <el-button size="small" :type="i.type" v-if="i.type" @click="i.onClick">{{i.name}}</el-button>
-          <el-button size="small" v-else @click="i.onClick">{{i.name}}</el-button>
+          <el-button size="small" :type="i.type" @click="i.onClick" v-if="!i.hide" :icon="i.icon ? i.icon : ''">{{i.name}}</el-button>
         </div>
       </div>
     </div>
@@ -98,7 +96,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    preTestingGroupsIdx: {
+    mergeColumns: {
       type: Number,
       default: () => 0,
     },
@@ -160,7 +158,7 @@ export default {
     },
     //合并列
     objectSpanMethod({ rowIndex, columnIndex }) {
-      if (columnIndex === this.preTestingGroupsIdx) {
+      if (columnIndex === this.mergeColumns) {
         const _row = this.spanArr[rowIndex]; //需要合并的行数
         const _col = _row > 0 ? 1 : 0;
         return {

@@ -20,7 +20,7 @@
           clearable
           v-if="item.type === 'Input'"
           v-model="searchData[item.prop]"
-          @input="item.input ? item.input(searchData[item.prop]) : '' "
+          @input="item.input && item.input(searchData[item.prop])"
           :placeholder="item.placeholder"
         ></el-input>
 
@@ -42,7 +42,7 @@
         <el-select
           v-if="item.type === 'Select'"
           v-model="searchData[item.prop]"
-          @change="item.change ? item.change(searchData[item.prop]) : '' "
+          @change="item.change && item.change(searchData[item.prop])"
           @visible-change="$forceUpdate()"
           :name="item.prop"
           :ref="item.prop"
@@ -83,7 +83,7 @@
           v-if="item.type === 'Date'"
           v-model="searchData[item.prop]"
           value-format="yyyy-MM-dd"
-          @change="item.change(searchData[item.prop])"
+          @change="item.change && item.change(searchData[item.prop])"
           :placeholder="item.placeholder"
         ></el-date-picker>
 
@@ -98,7 +98,7 @@
           :placeholder="item.placeholder"
           value-format="yyyy-MM-dd hh:mm:ss"
           :disabled="item.disable && item.disable(searchData[item.prop])"
-          @change="item.change(searchData[item.prop])"
+          @change="item.change && item.change(searchData[item.prop])"
         ></el-date-picker>
 
         <!-- 起止时间 -->
@@ -109,7 +109,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           value-format="yyyy-MM-dd"
-          @change="item.change(searchData[item.prop])"
+          @change="item.change && item.change(searchData[item.prop])"
         ></el-date-picker>
 
         <!-- 滑块 -->
@@ -127,7 +127,7 @@
           :disabled="item.props.disabled || false"
           style="width: 100%;"
           :props="item.props.defaultParams"
-          @change="item.change(searchData[item.prop], item)"
+          @change="item.change && item.change(searchData[item.prop], item)"
         ></el-cascader>
       </el-form-item>
       <el-form-item class="search_input_button" v-if="isHandle">
@@ -139,7 +139,7 @@
         </el-button>
       </el-form-item>
       <!-- button 操作按钮 -->
-      <el-form-item class="search_input_button" v-if="isHandle">
+      <el-form-item class="search_input_button" v-if="searchHandle.length">
         <template v-for="item in searchHandle">
           <el-button :key="item.label" :type="item.type" @click="item.handle()" v-if="!item.hide">
             <span>{{ item.label }}</span>

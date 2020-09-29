@@ -1,19 +1,29 @@
 <!-- 导出 -->
 <template>
-  <div>
-    <ExportPdf />
+  <div class="G-flex">
+    <ExportPdf :contentData="contentData" />
+    <ExportExcel class="G-mgl-5" :aoa="aoa" />
   </div>
 </template>
 
 <script>
-import ExportPdf from '@/components/ExportPdf'
+import ExportPdf from "@/components/ExportPdf";
+import ExportExcel from "@/components/ExportExcel";
 export default {
   name: "export",
-  components:{
-    ExportPdf
+  components: {
+    ExportPdf,
+    ExportExcel,
   },
   data() {
-    return {};
+    return {
+      aoa: [
+        ["姓名", "性别", "年龄", "注册时间"],
+        ["张三", "男", 18, new Date()],
+        ["李四", "女", 22, new Date()],
+      ],
+      contentData: [{ name: "测试1" }, { name: "测试2" }],
+    };
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {},
