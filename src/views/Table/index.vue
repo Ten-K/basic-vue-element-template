@@ -153,20 +153,23 @@ export default {
           },
         },
       ],
-      tableData: [],
-      columns: [
+      tableData: [],//表格内容数据
+      columns: [//表头数据
         { label: "操作内容", prop: "operateContent" },
         { slot: "username" },
         { slot: "createTime" },
         { slot: "test" },
       ],
-      pageObj: {
+      pageObj: {//分页数据
         sizes: [10, 20, 30, 40],
         size: 10,
         total: 1,
         currentPage: 1,
-        func: (currentPage) => {
+        func: (currentPage) => {//当前页
           this.pageTurning(currentPage);
+        },
+        sizeFunc: (size) => {//当前显示条数
+          this.handleSizeChange(size);
         },
       },
       isDialog: false,
@@ -221,8 +224,14 @@ export default {
         }
       });
     },
+    //显示第n页
     pageTurning(currentPage) {
       self.pageObj.currentPage = currentPage
+      self.getTableList()
+    },
+    //一页显示n条数据
+    handleSizeChange(size){
+      self.pageObj.size = size
       self.getTableList()
     },
     //因为要合并的行数是不固定的，此函数是实现合并随意行数的功能

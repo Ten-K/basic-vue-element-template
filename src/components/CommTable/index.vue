@@ -72,7 +72,7 @@
         :page-size="pageObj.size"
         :total="pageObj.total"
         :current-page="pageObj.currentPage"
-        @size-change="handleSizeChange"
+        @size-change="pageObj.sizeFunc"
         @current-change="pageObj.func"
       ></el-pagination>
     </div>
@@ -142,9 +142,6 @@ export default {
     //点击某一行返回行数据
     handleClick(val) {
       this.$emit("handleClick", val);
-    },
-    handleSizeChange(val) {
-      this.$emit("handleSizeChange", val);
     },
     tableRowClassName({ row, rowIndex }) {
       //添加行序号

@@ -145,7 +145,6 @@ app.post('/table/deletes', function (req, res) {
 //table模块查询
 app.get('/table/list', function (req, res) {
   // 查询tableList表, 没有数据库时，可注释data，使用上面的data数据
-  console.log(req.query)
   let { curPage, pageSize } = req.query
   curPage = Number(curPage)
   pageSize = Number(pageSize)
