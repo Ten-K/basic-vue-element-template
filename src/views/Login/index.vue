@@ -94,7 +94,6 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-/* @import url(); 引入css类 */
 .home {
   display: flex;
   justify-content: center;

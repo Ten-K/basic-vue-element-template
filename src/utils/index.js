@@ -3,7 +3,7 @@
  * @Author: Lrl
  * @Date: 2020-09-09 09:51:50
  * @LastEditors: Lrl
- * @LastEditTime: 2020-09-21 12:01:29
+ * @LastEditTime: 2020-09-29 16:17:57
  */
 
 let utils = {
@@ -29,12 +29,12 @@ let utils = {
   },
   //格式化时间
   formatTime(time) {
-    var d = new Date(time);
-    var times = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + 
+    let d = new Date(time);
+    let times = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + 
             d.getDate()
     return times;
-  }
-
+  },
+  
 }
 
 // 暴露给外部访问

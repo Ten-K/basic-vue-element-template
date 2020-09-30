@@ -204,17 +204,26 @@ export default {
       self.getTableList(val);
     },
     //获取列表数据
-    getTableList(val = null) {
-      self.$api.tableApi.tableList(val).then((res) => {
+    getTableList(val) {
+      let obj = {
+        pageSize: self.pageObj.size,
+        curPage: self.pageObj.currentPage,
+        data:{
+          keyword: val ? val.keyword : null
+        }
+      }
+      self.$api.tableApi.tableList(obj).then((res) => {
         self.tableData = [];
         if (res) {
+          self.pageObj.total = res.total
           self.tableData = res.data;
           self.getSpanArr();
         }
       });
     },
     pageTurning(currentPage) {
-      console.log(currentPage);
+      self.pageObj.currentPage = currentPage
+      self.getTableList()
     },
     //因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArr() {

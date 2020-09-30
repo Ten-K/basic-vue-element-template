@@ -1,4 +1,4 @@
-<!--  -->
+<!-- 简易WebSocket -->
 <template>
   <div class="G-home">
     <div class="content" ref="box">
@@ -41,7 +41,7 @@ export default {
   methods: {
     //发送聊天信息
     sendText() {
-      if (self.$_.isEmptyObject(self.contentText)) return;
+      if (self.$_.isEmptyObject(self.contentText)) return self.$message.info('不能发送空白信息');
       self.list = [...self.list, { type: "mine", content: self.contentText }]; //通过type字段进行区分是自己（mine）发的还是系统（robot）返回的
       self.backText(function () {
         self.contentText = ""; //加回调在得到返回数据的时候清除输入框的内容

@@ -145,33 +145,50 @@ app.post('/table/deletes', function (req, res) {
 //table模块查询
 app.get('/table/list', function (req, res) {
   // 查询tableList表, 没有数据库时，可注释data，使用上面的data数据
-  let searchSql
-  if (req.query.keyword) {
-    searchSql = `SELECT * FROM tableList WHERE username in (${req.query.keyword})`
-  } else {
-    searchSql = "SELECT * FROM tableList"
-  }
+  console.log(req.query)
+  let { curPage, pageSize } = req.query
+  curPage = Number(curPage)
+  pageSize = Number(pageSize)
+  let params = JSON.parse(req.query.data) 
+  let isMore = false;//是否有多个查询参数
+  let sql = "SELECT count(*) as kkk FROM tableList" //查询总条数
+  let searchSql = `SELECT * FROM tableList`
+  if (params.keyword) {
+    sql += ` WHERE username = ${params.keyword}` //根据条件查询总条数
+    searchSql += ` WHERE username in (${params.keyword}) limit ${(curPage-1)* pageSize},${pageSize}`
+    isMore = true;
+  }else{
+    searchSql += ` limit ${(curPage-1)* pageSize},${pageSize}`
+  } 
   let result
-  db.query(searchSql, (err, data) => {
+  db.query(sql, (err, data) => {
     if (err) {
       result = err
     } else {
-      result = {
-        code: 0,
-        msg: 'ok',
-        data: {
-          // data: [
-          //   { userid:'1', operateContent: "测试1", username: "1", createTime: "2020-09-08" },
-          //   { userid:'2', operateContent: "测试2", username: "2", createTime: "2020-09-08" },
-          //   { userid:'3', operateContent: "测试3", username: "1", createTime: "2020-09-14" },
-          //   { userid:'4', operateContent: "测试4", username: "2", createTime: "2020-09-14" }
-          // ]
-          data
+      let total = data[0].kkk 
+      db.query(searchSql, (err, data) => {
+        if (err) {
+          result = err
+        } else {
+          result = {
+            code: 0,
+            msg: 'ok',
+            data: {
+              // data: [
+              //   { userid:'1', operateContent: "测试1", username: "1", createTime: "2020-09-08" },
+              //   { userid:'2', operateContent: "测试2", username: "2", createTime: "2020-09-08" },
+              //   { userid:'3', operateContent: "测试3", username: "1", createTime: "2020-09-14" },
+              //   { userid:'4', operateContent: "测试4", username: "2", createTime: "2020-09-14" }
+              // ]
+              data,
+              total
+            },
+          }
         }
-      }
+        res.send(result)
+      });
     }
-    res.send(result)
-  });
+  })
 })
 
 //test接口
@@ -188,6 +205,7 @@ app.get('/list/product', function (req, res) {
   }
   res.send(result)
 })
+
 //定义端口，此处所用为3000端口，可自行更改
 let server = app.listen(3000, function () {
   console.log('runing 3000...');

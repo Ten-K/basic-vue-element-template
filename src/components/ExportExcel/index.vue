@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import XLSX from 'xlsx'
 export default {
   name: "",
   props: {
