@@ -152,6 +152,7 @@ export default {
             a4Width,
             (a4Width / canvas.width) * leftHeight
           );
+          this.isDialog = false;
           pdf.save(pdfName + ".pdf");
         } else {
           try {

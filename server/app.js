@@ -144,50 +144,68 @@ app.post('/table/deletes', function (req, res) {
 
 //table模块查询
 app.get('/table/list', function (req, res) {
-  // 查询tableList表, 没有数据库时，可注释data，使用上面的data数据
-  let { curPage, pageSize } = req.query
-  curPage = Number(curPage)
-  pageSize = Number(pageSize)
-  let params = JSON.parse(req.query.data) 
-  let isMore = false;//是否有多个查询参数
-  let sql = "SELECT count(*) as kkk FROM tableList" //查询总条数
-  let searchSql = `SELECT * FROM tableList`
-  if (params.keyword) {
-    sql += ` WHERE username = ${params.keyword}` //根据条件查询总条数
-    searchSql += ` WHERE username in (${params.keyword}) limit ${(curPage-1)* pageSize},${pageSize}`
-    isMore = true;
-  }else{
-    searchSql += ` limit ${(curPage-1)* pageSize},${pageSize}`
-  } 
-  let result
-  db.query(sql, (err, data) => {
-    if (err) {
-      result = err
-    } else {
-      let total = data[0].kkk 
-      db.query(searchSql, (err, data) => {
-        if (err) {
-          result = err
-        } else {
-          result = {
-            code: 0,
-            msg: 'ok',
-            data: {
-              // data: [
-              //   { userid:'1', operateContent: "测试1", username: "1", createTime: "2020-09-08" },
-              //   { userid:'2', operateContent: "测试2", username: "2", createTime: "2020-09-08" },
-              //   { userid:'3', operateContent: "测试3", username: "1", createTime: "2020-09-14" },
-              //   { userid:'4', operateContent: "测试4", username: "2", createTime: "2020-09-14" }
-              // ]
-              data,
-              total
-            },
-          }
-        }
-        res.send(result)
-      });
-    }
-  })
+  result = {
+    code: 0,
+    msg: 'ok',
+    data: {
+      data: [
+        { userid:'1', operateContent: "测试1", username: "1", createTime: "2020-09-08 11:50:50" },
+        { userid:'2', operateContent: "测试2", username: "2", createTime: "2020-09-08 11:50:50" },
+        { userid:'3', operateContent: "测试3", username: "1", createTime: "2020-09-14 11:50:50" },
+        { userid:'4', operateContent: "测试4", username: "2", createTime: "2020-09-14 11:50:50" }
+      ],
+      total: 4
+    },
+  }
+  res.send(result)
+  
+  /* 为了在没有数据库的情况下不影响页面显示，使用以上的假数据(当然也就没有了增删改查和分页的功能)
+   * 当你创建了符合本项目的数据库时可使用以下的代码 
+  */
+
+  // let { curPage, pageSize } = req.query
+  // curPage = Number(curPage)
+  // pageSize = Number(pageSize)
+  // let params = JSON.parse(req.query.data) 
+  // let isMore = false;//是否有多个查询参数
+  // let sql = "SELECT count(*) as kkk FROM tableList" //查询总条数
+  // let searchSql = `SELECT * FROM tableList`
+  // if (params.keyword) {
+  //   sql += ` WHERE username = ${params.keyword}` //根据条件查询总条数
+  //   searchSql += ` WHERE username in (${params.keyword}) limit ${(curPage-1)* pageSize},${pageSize}`
+  //   isMore = true;
+  // }else{
+  //   searchSql += ` limit ${(curPage-1)* pageSize},${pageSize}`
+  // } 
+  // let result
+  // db.query(sql, (err, data) => {
+  //   if (err) {
+  //     result = err
+  //   } else {
+  //     let total = data[0].kkk 
+  //     db.query(searchSql, (err, data) => {
+  //       if (err) {
+  //         result = err
+  //       } else {
+  //         result = {
+  //           code: 0,
+  //           msg: 'ok',
+  //           data: {
+  //             // data: [
+  //             //   { userid:'1', operateContent: "测试1", username: "1", createTime: "2020-09-08 11:50:50" },
+  //             //   { userid:'2', operateContent: "测试2", username: "2", createTime: "2020-09-08 11:50:50" },
+  //             //   { userid:'3', operateContent: "测试3", username: "1", createTime: "2020-09-14 11:50:50" },
+  //             //   { userid:'4', operateContent: "测试4", username: "2", createTime: "2020-09-14 11:50:50" }
+  //             // ]
+  //             data,
+  //             total
+  //           },
+  //         }
+  //       }
+  //       res.send(result)
+  //     });
+  //   }
+  // })
 })
 
 //test接口
@@ -209,3 +227,21 @@ app.get('/list/product', function (req, res) {
 let server = app.listen(3000, function () {
   console.log('runing 3000...');
 })
+
+
+//Websocket
+let ws = require("nodejs-websocket");
+console.log("开始建立链接");
+ws.createServer(function (conn) {
+  conn.on("text", function (str) {
+    console.log("info", str);
+    conn.send(`${str}（机器人`)
+  });
+  conn.on("close", function (code, reason) {
+    console.log("关闭连接")
+  });
+  conn.on("error", function (code, reason) {
+    console.log("异常关闭")
+  })
+}).listen(8001);
+console.log("链接建立完毕");

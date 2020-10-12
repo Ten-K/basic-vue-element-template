@@ -17,7 +17,6 @@
     |-- server  //后台代码
     |   |-- app.js  //本地服务器
     |   |-- package.json
-    |   |-- ws.js  //WebSocket服务
     |-- src
         |-- App.vue //根组件
         |-- main.js  //入口js文件
@@ -89,14 +88,11 @@ server文件：本地服务器。用于模拟接口。
 ```
 npm install
 ```
-启动本地接口服务器
+启动本地服务器
 ```
 node app
 ```  
-启动WebSocket服务
-```
-node ws
-```
+
 ## Function
 1. components文件夹组件说明:
     1. CommDialog组件的目的。利用一个组件解决单页面多个弹窗的问题;
