@@ -19,17 +19,17 @@ const menu = [
         path: "export",
         title: "Export",
       },
+      {
+        icon: "",
+        path: "verificationCode",
+        title: "verificationCode",
+      },
     ],
   },
   {
     icon: "el-icon-menu",
     path: "enterjump",
     title: "enterJump",
-  },
-  {
-    icon: "el-icon-menu",
-    path: "verificationCode",
-    title: "verificationCode",
   },
   {
     icon: "el-icon-menu",
@@ -41,6 +41,11 @@ const menu = [
     path: "ws",
     title: "webSocket",
   },
+  {
+    icon: "el-icon-menu",
+    path: "echarts",
+    title: "echarts",
+  }
 ]
 
 menu.forEach((item) => {

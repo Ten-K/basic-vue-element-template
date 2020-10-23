@@ -96,6 +96,7 @@ export default {
       type: Array,
       default: () => [],
     },
+    //需要合并行的第几列
     mergeColumns: {
       type: Number,
       default: () => 0,
@@ -153,7 +154,7 @@ export default {
       //   return "color2";
       // }
     },
-    //合并列
+    //合并行
     objectSpanMethod({ rowIndex, columnIndex }) {
       if (columnIndex === this.mergeColumns) {
         const _row = this.spanArr[rowIndex]; //需要合并的行数

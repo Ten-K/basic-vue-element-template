@@ -29,16 +29,24 @@ service.interceptors.request.use(
   })
 
 // axios响应拦截器
-service.interceptors.response.use(response => {
-  setTimeout(() => {
+service.interceptors.response.use(
+  response => {
+    setTimeout(() => {
+      loading.close();
+    }, 300);
+    // 在这里你可以判断后台返回数据携带的请求码
+    if (response.data.code === 0 || response.data.code === '0') {
+      return response.data.data || response.data
+    } else {
+      // 非200请求抱错
+      throw Error(response.msg || response.data.msg || '服务异常')
+    }
+  },
+  error => {
+    // 关闭loading
     loading.close();
-  }, 300);
-  // 在这里你可以判断后台返回数据携带的请求码
-  if (response.data.code === 0 || response.data.code === '0') {
-    return response.data.data || response.data
-  } else {
-    // 非200请求抱错
-    throw Error(response.msg || response.data.msg || '服务异常')
+    // 对响应错误处理
+    return Promise.reject(error)
   }
-})
+)
 export default service

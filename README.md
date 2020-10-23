@@ -59,26 +59,29 @@
         |       |-- index.js
         |-- views  //页面目录
             |-- index.vue
+            |-- Components
+            |   |-- Export
+            |   |   |-- index.vue
+            |   |-- Form
+            |   |   |-- index.vue
+            |   |-- Table
+            |   |   |-- index.scss
+            |   |   |-- index.vue
+            |   |-- VerificationCode
+            |       |-- Identify.vue
+            |       |-- index.vue
+            |-- Echarts
+            |   |-- index.vue
             |-- EnterJump
-            |   |-- index.vue
-            |-- Export
-            |   |-- index.vue
-            |-- Form
             |   |-- index.vue
             |-- Home
             |   |-- index.vue
             |-- Login
             |   |-- index.vue
-            |-- simulationVuex
-            |   |-- index.vue
-            |-- Table
-            |   |-- index.scss
-            |   |-- index.vue
-            |-- VerificationCode
-            |   |-- Identify.vue
+            |-- SimulationVuex
             |   |-- index.vue
             |-- Websocket
-                |-- index.vue
+            |   |-- index.vue
 ```
 
 ## Preface
@@ -102,7 +105,8 @@ node app
     5. ExportPdf具有html转pdf并下载的功能。支持分页,标注页脚(少量pdf导出可由前端实现,如果量大不建议前端实现导出);
 2. 封装axios并挂载到vue实例上全局使用,具有请求拦截和响应拦截功能;
 3. 在vue.config.js文件配置了反向代理用于解决跨域问题；
-4. 已有指令:
+4. 简易的Websocket聊天窗功能
+5. 已有指令:
     1. v-enterJump:  用于回车跳转到下一个输入框  (不能跳转时间控件);
     2. v-focus:  用于进入页面聚焦到某一个输入框。
 

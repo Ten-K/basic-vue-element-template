@@ -9,6 +9,13 @@
         <Sideber :isCollapse="isCollapse" :menuList="menuList"/>
       </aside>
       <article :class="{'home-article': true, 'home-article-nocollapse': !isCollapse, 'home-article-collapse': isCollapse}">
+        <!-- 面包屑 -->
+        <el-breadcrumb separator="/" class="home-article-breadcrumb">
+          <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item v-for="(item, index) in $route.meta" :key="index">
+            {{item}}
+          </el-breadcrumb-item>
+        </el-breadcrumb>
         <router-view></router-view>
       </article>
     </main>
@@ -27,8 +34,8 @@ export default {
   },
   data() {
     return {
-      isCollapse: false,
-      menuList:menu
+      isCollapse: false, //菜单默认不收缩
+      menuList:menu //菜单数据
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
@@ -36,6 +43,7 @@ export default {
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
   methods: {
+    //控制菜单栏的收缩/展开
     onclickCollapse(headerIsCollapse) {
       this.isCollapse = headerIsCollapse;
     },
@@ -51,13 +59,21 @@ export default {
     border-bottom: 2px solid #f5f5f5;
   }
   .home-main {
+    background: #f5f5f5;  
     display: flex;
     width: 100%;
     height: calc(100% - 45px);
+    .home-aside{
+      background: #fff; 
+    }
     .home-article {
-      border: 10px solid #f5f5f5;
+      background: #fff; 
+      margin: 10px;
       padding: 10px;
       min-width: 960px;
+      .home-article-breadcrumb{
+        margin-bottom: 20px;
+      }
     }
     .home-article-nocollapse{
       flex: 1;
