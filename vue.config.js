@@ -1,6 +1,6 @@
 // vue.config.js 
 module.exports = {
-  lintOnSave: false, //去除esline
+  lintOnSave: false, //关闭esline
   devServer: {
     proxy: {
       '/': {                //这里最好有一个 /

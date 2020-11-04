@@ -1,8 +1,8 @@
 <!-- 导出 -->
 <template>
   <div class="G-flex">
-    <ExportPdf :contentData="contentData" />
-    <ExportExcel class="G-mgl-5" :aoa="aoa" />
+    <ExportPdf :pdfData="pdfData" />
+    <ExportExcel class="G-mgl-5" :excelData="excelData" />
   </div>
 </template>
 
@@ -17,12 +17,14 @@ export default {
   },
   data() {
     return {
-      aoa: [
+      excelData: [ //导处xlxs的数据
+        ["主要信息", null, null, "其他信息"],
         ["姓名", "性别", "年龄", "注册时间"],
         ["张三", "男", 18, new Date()],
         ["李四", "女", 22, new Date()],
       ],
-      contentData: [{ name: "测试1" }, { name: "测试2" }],
+      //导处pdf的数据
+      pdfData: [{ name: "测试1" }, { name: "测试2" }],
     };
   },
   //生命周期 - 创建完成（访问当前this实例）

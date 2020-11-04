@@ -9,7 +9,7 @@
       :onConfirm="exportToPdf"
     >
       <div id="export_content" class="export_content">
-        <h1 v-for="(i, index) in contentData" :key="index" class="pdfcontent">
+        <h1 v-for="(i, index) in pdfData" :key="index" class="pdfcontent">
           {{ i.name }}
         </h1>
       </div>
@@ -27,7 +27,7 @@ export default {
   },
   name: "exportPdf",
   props: {
-    contentData: {
+    pdfData: {
       type: Array,
       default: () => {
         return [];

@@ -10,7 +10,7 @@ import XLSX from 'xlsx'
 export default {
   name: "",
   props: {
-    aoa: {
+    excelData: {
       type: Array,
       default: () => {
         return [];
@@ -26,7 +26,7 @@ export default {
   mounted() {},
   methods: {
     exportExcel() {
-      let sheet = XLSX.utils.aoa_to_sheet(this.aoa);
+      let sheet = XLSX.utils.aoa_to_sheet(this.excelData);
       sheet["!merges"] = [
         // 设置第一行第一列到第一行第三列的单元格合并
         { s: { r: 0, c: 0 }, e: { r: 0, c: 2 } },//设置合并单元格，可根据需求动态设置

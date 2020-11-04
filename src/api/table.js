@@ -13,6 +13,7 @@ let tableApi ={
       url: basicApi.tableList,
       method: 'get',
       params:data,
+      loading:false //取消loading
     })
   },
   tableAdd(data){

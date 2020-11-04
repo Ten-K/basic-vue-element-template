@@ -1,8 +1,8 @@
 <!-- ctrl + shift + v 预览md文件  mddir生成目录结构-->
-# hello-world  
-**提示：** 需要先执行Preface的步骤才能登陆，因为登陆具有模拟接口的功能。
+# 前言 
+**提示：** 因为登陆具有模拟接口的功能,需先启动本地服务器才能登陆。
 
-## Directory Structure
+## 目录
 ```
 |-- basic-vue-element-template
     |-- .gitignore
@@ -84,7 +84,7 @@
             |   |-- index.vue
 ```
 
-## Preface
+## 启动本地服务器
 server文件：本地服务器。用于模拟接口。  
 在server文件下  
 使用:
@@ -96,36 +96,42 @@ npm install
 node app
 ```  
 
-## Function
+## 功能
 1. components文件夹组件说明:
     1. CommDialog组件的目的。利用一个组件解决单页面多个弹窗的问题;
     2. CommForm表单组件。自带搜索和重置按钮,只需传入搜索函数即完成搜索和重置按钮的功能;
     3. CommTable附带上方添加从左右两边开始的按钮及下方添加分页组件的功能(可控制序号列,勾选列,合并行以及自定义操作列);
-    4. ExportExcel可将json数据导出成excel并合并单元格。
+    4. ExportExcel可将json数据导出成excel并合并单元格;
     5. ExportPdf具有html转pdf并下载的功能。支持分页,标注页脚(少量pdf导出可由前端实现,如果量大不建议前端实现导出);
-2. 封装axios并挂载到vue实例上全局使用,具有请求拦截和响应拦截功能;
-3. 在vue.config.js文件配置了反向代理用于解决跨域问题；
+    6. Header公共头部;
+    7. Sideber利用递归组件实现多级菜单.
+2. 封装axios并挂载到vue实例上全局使用,具有请求拦截,响应拦截和默认loading功能,如取消loading,可在api文件夹下对应的文件里的请求参数加入loading:false;
+3. 在vue.config.js文件配置了反向代理用于解决跨域问题;
 4. 简易的Websocket聊天窗功能
-5. 已有指令:
+5. 已有全局指令:
     1. v-enterJump:  用于回车跳转到下一个输入框  (不能跳转时间控件);
-    2. v-focus:  用于进入页面聚焦到某一个输入框。
+    2. v-focus:  用于进入页面聚焦到某一个输入框.
+## 相关页面
+![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104103956859-1399111189.png)  
+![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104104826137-276690659.png)  
+![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104104919825-1182010930.png)
 
-## Project setup
+## 安装依赖
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 启动项目
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 项目打包
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### 检查代码书写格式(eslint 检查)
 ```
 npm run lint
 ```

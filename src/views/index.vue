@@ -72,7 +72,7 @@ export default {
       padding: 10px;
       min-width: 960px;
       .home-article-breadcrumb{
-        margin-bottom: 20px;
+        margin-bottom: 5px;
       }
     }
     .home-article-nocollapse{

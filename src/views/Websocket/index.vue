@@ -15,6 +15,7 @@
       type="text"
       v-model="contentText"
       @keyup.enter.native="sendText"
+      placeholder="回车发送消息"
     ></el-input>
     <el-button @click="sendText">发送</el-button>
   </div>
