@@ -1,6 +1,6 @@
 <!-- 导出 -->
 <template>
-  <div class="G-flex">
+  <div class="G-home G-flex">
     <ExportPdf :pdfData="pdfData" />
     <ExportExcel class="G-mgl-5" :excelData="excelData" />
   </div>

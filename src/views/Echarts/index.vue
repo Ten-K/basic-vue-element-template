@@ -1,5 +1,5 @@
 <template>
-  <div class="G-flex">
+  <div>
     <div id="first" class="item"></div>
     <div id="two" class="item"></div>
     <div id="three" class="item"></div>
@@ -281,11 +281,9 @@ export default {
 };
 </script>
 <style type="text/css" lang="scss" scoped>
-.G-flex {
-  .item {
-    width: 600px;
-    height: 400px;
-    margin-left: 50px;
-  }
+.item {
+  width: 600px;
+  height: 400px;
+  margin-left: 50px;
 }
 </style>

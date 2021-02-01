@@ -67,12 +67,13 @@ export default {
       background: #fff; 
     }
     .home-article {
+      overflow: auto;
       background: #fff; 
-      margin: 10px;
-      padding: 10px;
       min-width: 960px;
+      margin: 10px;
       .home-article-breadcrumb{
-        margin-bottom: 5px;
+        padding: 3px 0 3px 5px;
+        border-bottom: 5px solid #f5f5f5;
       }
     }
     .home-article-nocollapse{
