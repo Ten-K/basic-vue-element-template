@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import tabsBus from '../../assets/js/tabsEventBus'
 export default {
   name: "Sideber",
   props: {
@@ -68,7 +69,7 @@ export default {
   mounted() {},
   methods: {
     selectPath(index) {
-      console.log(index);
+      tabsBus.$emit('getselectPath',index)
     },
   },
 };

@@ -52,6 +52,8 @@
         |   |-- index.js
         |-- store  //Vuex
         |   |-- index.js
+        |   |-- modules
+        |       |-- pagesTab.js
         |-- utils  
         |   |-- index.js  //函数工具库
         |   |-- request.js  //http请求
@@ -138,3 +140,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Tip
+  菜单使用递归组件故无法使用$emit传值给父组件(本项目使用eventBus实现传值)

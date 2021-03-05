@@ -30,14 +30,14 @@ const routes = [
     redirect: "/home",
     children: [
       { path: "/home", name:'home', component: Home, meta:[] },
-      { path: "/components/table", name:'eltable', component: Table, meta:['Table'] },
-      { path: "/components/form", name:'elform', component: Form, meta:['Form'] },
-      { path: "/components/export", name:'export', component: Export, meta:['Export'] },
-      { path: "/components/verificationCode", name:'verificationCode', component: VerificationCode, meta:['VerificationCode'] },
-      { path: "/enterjump", name:'enterjump', component: EnterJump, meta:['EnterJump'] },
-      { path: "/simulationVuex", name:'simulationVuex', component: SimulationVuex, meta:['SimulationVuex'] },
-      { path: "/ws", name:'ws', component: Ws, meta:['Ws'] },
-      { path: "/echarts", name:'echarts', component: Echarts, meta:['Echarts'] },
+      { path: "/components/table", name:'eltable', component: Table, meta:['components/Table'] },
+      { path: "/components/form", name:'elform', component: Form, meta:['components/Form'] },
+      { path: "/components/export", name:'export', component: Export, meta:['components/Export'] },
+      { path: "/components/verificationCode", name:'verificationCode', component: VerificationCode, meta:['components/verificationCode'] },
+      { path: "/enterjump", name:'enterjump', component: EnterJump, meta:['enterJump'] },
+      { path: "/simulationVuex", name:'simulationVuex', component: SimulationVuex, meta:['simulationVuex'] },
+      { path: "/ws", name:'ws', component: Ws, meta:['webSocket'] },
+      { path: "/echarts", name:'echarts', component: Echarts, meta:['echarts'] },
     ]
   }
 ]

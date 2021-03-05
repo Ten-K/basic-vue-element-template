@@ -23,7 +23,7 @@
       @handleClick="handleClick"
     >
       <el-table-column slot="username" label="操作人" align="left" width="200" show-overflow-tooltip>
-        <template slot-scope="scope">{{scope.row.username === 1 ? 'lrl' : 'test'}}</template>
+        <template slot-scope="scope">{{scope.row.username === '1' ? 'lrl' : 'test'}}</template>
       </el-table-column>
       <el-table-column
         slot="createTime"

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+import modulePagesTab from '@/store/modules/pagesTab'
+
 export default new Vuex.Store({
   state: {
     count: 0
@@ -26,5 +28,8 @@ export default new Vuex.Store({
     getDelCount(context, num) {
       context.commit('delCount', num)
     }
+  },
+  modules:{
+    modulePagesTab
   }
 })
