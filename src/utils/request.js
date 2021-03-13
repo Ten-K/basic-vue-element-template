@@ -23,7 +23,7 @@ axios.defaults.timeout = 10000
 service.interceptors.request.use(
   config => {
     //loading不传默认为true,传false可关闭laoding
-    config.loading === false ? '' : config.loading = true
+    config.loading = config.loading || true
     if (config.loading) {
       loading = Loading.service({
         lock: true,
@@ -55,8 +55,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    // 关闭loading
-    loading.close();
+    loading && loading.close()
     // 对响应错误处理
     return Promise.reject(error)
   }

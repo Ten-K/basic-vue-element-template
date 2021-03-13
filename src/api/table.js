@@ -1,19 +1,18 @@
 import request from '@/utils/request'
 
 let basicApi = {
-  tableList:'table/list',
-  tableAdd:'table/add',
-  tableUpdata:'table/updata',
-  tableDelete:'table/delete',
-  tableDeletes:'table/deletes',
+  tableList: 'table/list',
+  tableAdd: 'table/add',
+  tableUpdata: 'table/updata',
+  tableDelete: 'table/delete',
+  tableDeletes: 'table/deletes',
 }
 let tableApi ={
   tableList(data){
     return request({
       url: basicApi.tableList,
       method: 'get',
-      params:data,
-      loading:false //取消loading
+      params: data,
     })
   },
   tableAdd(data){
@@ -21,13 +20,14 @@ let tableApi ={
       url: basicApi.tableAdd,
       method: 'post',
       data,
+      loading: false, //取消loading
     })
   },
   tableUpdata(data){
     return request({
       url: basicApi.tableUpdata,
       method: 'post',
-      data,
+      data
     })
   },
   tableDelete(data){

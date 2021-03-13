@@ -59,16 +59,21 @@ export default {
       isCollapse: false, //菜单默认不收缩
       menuList:menu, //菜单数据
       editableTabsValue: '/home',
-      activeMenu: ''
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
-  created() {},
+  created() {
+      //在页面刷新时将editableTabsValue的信息保存到Storage里
+      window.addEventListener("beforeunload",()=>{
+        this.$_.set('editableTabsValue',this.editableTabsValue)
+      })
+  },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {
+    this.editableTabsValue = this.$_.get('editableTabsValue') || '/home'
+    //点击菜单
     tabsBus.$on('getselectPath',(key) => {
       this.editableTabsValue = key
-      this.activeMenu = key
       let result = this.editableTabs.find(data => { return key === data.path })
       if (!result) {
         this.searchMenu(this.menuList, key)
@@ -104,23 +109,20 @@ export default {
     // 选择tabs
     selectTabs (e) {
       if (this.activeMenu != e.name) {
-        this.activeMenu = e.name
         this.$router.push({path: e.name})
       }
     },
     // 移除tabs
     removeTabs (e) {
+      if(e === '/home') return
       let tabs = this.$store.state.modulePagesTab.pageTabsList
       let index = tabs.findIndex(data => { return data.path === e })
       if (index !== -1) {
         let nextTab = tabs[index + 1] || tabs[index - 1]
         if (nextTab) {
           this.editableTabsValue = nextTab.path
-          this.activeMenu = nextTab.path
-        } else {
-          this.activeMenu = ''
+          this.$router.push({path: nextTab.path})
         }
-        // tabs.splice(index, 1)
         this.$store.commit('removeTag', e)
       }
     },
@@ -128,10 +130,15 @@ export default {
     closeTabs () {
       this.$store.commit('clearTag')
       this.$router.push({path: '/home'})
-      this.activeMenu = ''
       this.editableTabsValue = this.$options.data().editableTabsValue
     },
   },
+  //组件销毁前
+  beforeDestroy(){
+    window.removeEventListener("beforeunload",()=>{
+      this.$_.set('editableTabsValue',this.editableTabsValue)
+    })
+  }
 };
 </script>
 <style scoped lang="scss">
@@ -148,11 +155,11 @@ export default {
     width: 100%;
     height: calc(100% - 45px);
     .home-aside{
-      background: #fff; 
+      background: #fff;
     }
     .home-article {
       overflow: auto;
-      background: #fff; 
+      background: #fff;
       min-width: 960px;
       margin: 10px;
       .tab-title {

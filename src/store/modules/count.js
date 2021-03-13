@@ -1,12 +1,4 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-Vue.use(Vuex)
-
-import createPersistedState from "vuex-persistedstate"
-import modulePagesTab from '@/store/modules/pagesTab'
-import moduleCount from '@/store/modules/count'
-
-export default new Vuex.Store({
+export default {
   state: {
     count: 0
   },
@@ -31,11 +23,4 @@ export default new Vuex.Store({
       context.commit('delCount', num)
     }
   },
-  modules:{
-    modulePagesTab,
-    // moduleCount
-  },
-  plugins: [createPersistedState({
-    storage: window.sessionStorage
-  })]
-})
+}
