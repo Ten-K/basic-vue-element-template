@@ -4,6 +4,7 @@ let basicApi = {
   Login:'login',
   // get my info
   UserInfo: 'user/info',
+  RoleAuth: 'roleAuth'
 }
 
 let loginApi ={
@@ -11,7 +12,8 @@ let loginApi ={
     return request({
       url: basicApi.Login,
       method: 'post',
-      data
+      data,
+      loading: true
     })
   },
   
@@ -24,7 +26,15 @@ let loginApi ={
         'Content-Type': 'application/json;charset=UTF-8',
       },
     })
-  }
+  },
+
+  roleAuth(data){
+    return request({
+      url: basicApi.RoleAuth,
+      method: 'post',
+      data
+    })
+  },
 }
 
 export default loginApi

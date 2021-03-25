@@ -40,6 +40,30 @@ app.post('/login', function (req, res) {
   })
 });
 
+//权限设置
+app.post('/roleAuth',(req, res)=>{
+  let result = {
+    code: 0,
+    msg: 'ok',
+    data: {
+      data: [
+        { id:'0', name: "index", pid: '-1', auth:'/index' },
+        { id:'1', name: "home", pid: '0', auth:'/home' },
+        { id:'2', name: "components", pid: '0', auth:'/components' },
+        { id:'3', name: "Table", pid: '2', auth:'/components/table' },
+        { id:'4', name: "Form", pid: '2', auth:'/components/form' },
+        { id:'5', name: "Export", pid: '2', auth:'/components/export' },
+        { id:'6', name: "verificationCode", pid: '2', auth:'/components/verificationCode' },
+        { id:'7', name: "enterJump", pid: '0', auth:'/enterjump' },
+        { id:'8', name: "simulationVuex", pid: '0', auth:'/simulationVuex' },
+        { id:'9', name: "webSocket", pid: '0', auth:'/ws' },
+        { id:'10', name: "echarts", pid: '0', auth:'/echarts' }
+      ]
+    },
+  }
+  res.send(result) 
+})
+
 //table模块新增
 app.post('/table/add', function (req, res) {
   let addSql = 'INSERT INTO tableList(operateContent, username) VALUES(?,?)';

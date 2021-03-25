@@ -53,7 +53,9 @@
         |-- store  //Vuex
         |   |-- index.js
         |   |-- modules
+        |       |-- loading.js
         |       |-- pagesTab.js
+        |       |-- permission.js
         |-- utils  
         |   |-- index.js  //函数工具库
         |   |-- request.js  //http请求
@@ -107,12 +109,13 @@ node app
     5. ExportPdf具有html转pdf并下载的功能。支持分页,标注页脚(少量pdf导出可由前端实现,如果量大不建议前端实现导出);
     6. Header公共头部;
     7. Sideber利用递归组件实现多级菜单.
-2. 封装axios并挂载到vue实例上全局使用,具有请求拦截,响应拦截和默认loading功能,如取消loading,可在api文件夹下对应的文件里的请求参数加入loading:false;
+2. 封装axios并挂载到vue实例上全局使用,具有请求拦截,响应拦截和默认loading功能,如需要loading,可在api文件夹下对应的文件里的请求参数加入loading:true;
 3. 在vue.config.js文件配置了反向代理用于解决跨域问题;
 4. 简易的Websocket聊天窗功能
 5. 已有全局指令:
     1. v-enterJump:  用于回车跳转到下一个输入框  (不能跳转时间控件);
     2. v-focus:  用于进入页面聚焦到某一个输入框.
+6. 根据权限动态加载路由及菜单
 ## 相关页面
 ![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104103956859-1399111189.png)  
 ![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104104826137-276690659.png)  

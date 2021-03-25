@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { Loading, Message } from "element-ui";
+import store from '@/store'
+import { Message } from "element-ui";
 // 配置axios的默认URL
 const service = axios.create({
   headers: {
@@ -14,7 +15,6 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   axios.defaults.baseURL = '/xxx/'
 }
-let loading = null
 // 配置允许跨域携带cookie
 axios.defaults.withCredentials = true
 // 配置超时时间
@@ -22,16 +22,7 @@ axios.defaults.timeout = 10000
 // 配置请求拦截
 service.interceptors.request.use(
   config => {
-    //loading不传默认为true,传false可关闭laoding
-    config.loading = config.loading || true
-    if (config.loading) {
-      loading = Loading.service({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      });
-    }
+    config.loading && store.dispatch('setLoading', true)
     return config;
   },
   error => {
@@ -42,10 +33,7 @@ service.interceptors.request.use(
 // axios响应拦截器
 service.interceptors.response.use(
   response => {
-    //加定时器为了模拟loading效果，请求时间太短loading出不来，实际开发可去掉定时器
-    response.config.loading && setTimeout(() => {
-      loading.close();
-    }, 300);
+    response.config.loading && store.dispatch('setLoading', false)
     // 在这里你可以判断后台返回数据携带的请求码
     if (response.data.code === 0 || response.data.code === '0') {
       return response.data.data || response.data
@@ -55,7 +43,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    loading && loading.close()
+    error.config.loading && store.dispatch('setLoading', false)
     // 对响应错误处理
     return Promise.reject(error)
   }

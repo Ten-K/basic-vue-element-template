@@ -46,7 +46,6 @@
 <script>
 import Sideber from "@/components/Sideber";
 import Header from "@/components/Header";
-import menu from "@/assets/js/menu";
 import tabsBus from '../assets/js/tabsEventBus'
 export default {
   name: "home",
@@ -57,7 +56,6 @@ export default {
   data() {
     return {
       isCollapse: false, //菜单默认不收缩
-      menuList:menu, //菜单数据
       editableTabsValue: '/home',
     };
   },
@@ -83,6 +81,9 @@ export default {
   computed: {
     editableTabs () {
       return this.$store.state.modulePagesTab.pageTabsList
+    },
+    menuList () {
+      return this.$store.state.modulePermission.menuList
     }
   },
   methods: {

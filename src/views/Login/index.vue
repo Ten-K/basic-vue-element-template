@@ -67,18 +67,17 @@ export default {
                 username: self.ruleForm.username,
                 password: self.ruleForm.password
               }
-              self.$router.push('/home')
-              // self.$api.loginApi.login(obj).then(res =>{
-              //   if(res){
-              //     self.$router.push('/home')
-              //     if(self.remember){
-              //       self.$_.set('username',self.ruleForm.username)
-              //       self.$_.set('password',self.ruleForm.password)
-              //     }else{
-              //       self.$_.remove('password',self.ruleForm.password)
-              //     }
-              //   }
-              // })
+              self.$api.loginApi.login(obj).then(res =>{
+                if(res){
+                  self.$router.push('/home')
+                  if(self.remember){
+                    self.$_.set('username',self.ruleForm.username)
+                    self.$_.set('password',self.ruleForm.password)
+                  }else{
+                    self.$_.remove('password',self.ruleForm.password)
+                  }
+                }
+              })
             }else{
               return self.$message({ message: "账号或密码错误", type: "error" })
             }

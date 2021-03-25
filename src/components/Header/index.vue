@@ -46,6 +46,7 @@ export default {
     },
     loginOut(){
       this.$_.remove('infolist')
+      this.$store.dispatch('changePermission', false)
       this.$router.push('/login')
     }
   },
