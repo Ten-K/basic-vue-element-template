@@ -17,6 +17,7 @@
     <!-- 表格部分 -->
     <el-table
       height="100%"
+      style="min-height:500px"
       size="mini"
       :stripe="true"
       ref="commonTable"

@@ -1,11 +1,15 @@
 const { json } = require('express');
 let express = require('express');//引入express模块
-const mysql = require("mysql");
 
 let app = express();
 
-// 连接basictest数据库
-var db = mysql.createConnection({ host: 'localhost', port: '3306', user: "root", password: '123456', database: 'basictest' });
+// 加载模块
+const nedb = require('nedb');
+// 实例化连接对象（不带参数默认为内存数据库）
+const db = new nedb({
+  filename: './data/save.db',
+  autoload: true
+});
 
 app.all('*', function (req, res, next) {//允许跨域
   res.header("Access-Control-Allow-Origin", "*");
@@ -66,23 +70,18 @@ app.post('/roleAuth',(req, res)=>{
 
 //table模块新增
 app.post('/table/add', function (req, res) {
-  let addSql = 'INSERT INTO tableList(operateContent, username) VALUES(?,?)';
   let postdata = '';
   let result
   req.on('data', function (chunk) {
     postdata += chunk;
   });
   req.on('end', function () {
-    postdata = postdata
-    let { operateContent, username } = JSON.parse(postdata)
-    db.query(addSql, [operateContent, username], (err, data) => {
-      if (err) {
-        result = err
-      } else {
-        result = {
-          code: 0,
-          msg: 'ok',
-        }
+    // 插入单项
+    db.insert(JSON.parse(postdata), (err, ret) => {
+      if (err) return result = err
+      result = {
+        code: 0,
+        msg: 'ok',
       }
       res.send(result);
     });
@@ -91,23 +90,19 @@ app.post('/table/add', function (req, res) {
 
 //table模块编辑
 app.post('/table/updata', function (req, res) {
-  let updataSql = 'UPDATE tableList SET operateContent = ?,username = ? WHERE userid = ?';
   let postdata = '';
   let result
   req.on('data', function (chunk) {
     postdata += chunk;
   });
   req.on('end', function () {
-    postdata = postdata
-    let { operateContent, username, userid } = JSON.parse(postdata)
-    db.query(updataSql, [operateContent, username, userid], (err, data) => {
-      if (err) {
-        result = err
-      } else {
-        result = {
-          code: 0,
-          msg: 'ok',
-        }
+    postdata = JSON.parse(postdata)
+    let {_id,username,operateContent,createTime} = postdata
+    db.update({_id},{$set:{operateContent,username,createTime}}, (err, ret) => {
+      if (err) return result = err
+      result = {
+        code: 0,
+        msg: 'ok',
       }
       res.send(result);
     });
@@ -116,23 +111,19 @@ app.post('/table/updata', function (req, res) {
 
 //table模块删除
 app.post('/table/delete', function (req, res) {
-  let delSql = 'DELETE FROM tableList WHERE userid = ?';
   let postdata = '';
   let result
   req.on('data', function (chunk) {
     postdata += chunk;
   });
   req.on('end', function () {
-    postdata = postdata
-    let { userid } = JSON.parse(postdata)
-    db.query(delSql, [userid], (err, data) => {
-      if (err) {
-        result = err
-      } else {
-        result = {
-          code: 0,
-          msg: 'ok',
-        }
+    postdata = JSON.parse(postdata)
+    let { _id } = postdata
+    db.remove({ _id }, function (err, ret) {
+      if (err) return result = err
+      result = {
+        code: 0,
+        msg: 'ok',
       }
       res.send(result);
     });
@@ -141,110 +132,47 @@ app.post('/table/delete', function (req, res) {
 
 //table模块批量删除
 app.post('/table/deletes', function (req, res) {
-  let delSqls = 'DELETE FROM tableList WHERE userid in (';
   let postdata = '';
   let result
+  let i = 0
   req.on('data', function (chunk) {
     postdata += chunk;
   });
   req.on('end', function () {
     postdata = postdata
     let { ids } = JSON.parse(postdata)
-    let str = ids.join(',')
-    delSqls = `${delSqls}${str})`
-    db.query(delSqls, (err, data) => {
-      if (err) {
-        result = err
-      } else {
+    ids.forEach(_id => {
+      db.remove({_id}, function (err, ret) {
+        if (err) return result = err
         result = {
           code: 0,
           msg: 'ok',
         }
-      }
-      res.send(result);
+        i++
+        if(i == ids.length){
+          res.send(result)
+        }
+      });
     });
   })
 });
 
 //table模块查询
 app.get('/table/list', function (req, res) {
-  result = {
-    code: 0,
-    msg: 'ok',
-    data: {
-      data: [
-        { userid:'1', operateContent: "测试1", username: "1", createTime: "2020-09-08 11:50:50" },
-        { userid:'2', operateContent: "测试2", username: "2", createTime: "2020-09-08 11:50:50" },
-        { userid:'3', operateContent: "测试3", username: "1", createTime: "2020-09-14 11:50:50" },
-        { userid:'4', operateContent: "测试4", username: "2", createTime: "2020-09-14 11:50:50" }
-      ],
-      total: 4
-    },
-  }
-  res.send(result)
-  
-  /* 为了在没有数据库的情况下不影响页面显示，使用以上的假数据(当然也就没有了增删改查和分页的功能)
-   * 当你创建了符合本项目的数据库时可使用以下的代码 
-  */
-
-  // let { curPage, pageSize } = req.query
-  // curPage = Number(curPage)
-  // pageSize = Number(pageSize)
-  // let params = JSON.parse(req.query.data) 
-  // let isMore = false;//是否有多个查询参数
-  // let sql = "SELECT count(*) as kkk FROM tableList" //查询总条数
-  // let searchSql = `SELECT * FROM tableList`
-  // if (params.keyword) {
-  //   sql += ` WHERE username = ${params.keyword}` //根据条件查询总条数
-  //   searchSql += ` WHERE username in (${params.keyword}) limit ${(curPage-1)* pageSize},${pageSize}`
-  //   isMore = true;
-  // }else{
-  //   searchSql += ` limit ${(curPage-1)* pageSize},${pageSize}`
-  // } 
-  // let result
-  // db.query(sql, (err, data) => {
-  //   if (err) {
-  //     result = err
-  //   } else {
-  //     let total = data[0].kkk 
-  //     db.query(searchSql, (err, data) => {
-  //       if (err) {
-  //         result = err
-  //       } else {
-  //         result = {
-  //           code: 0,
-  //           msg: 'ok',
-  //           data: {
-  //             // data: [
-  //             //   { userid:'1', operateContent: "测试1", username: "1", createTime: "2020-09-08 11:50:50" },
-  //             //   { userid:'2', operateContent: "测试2", username: "2", createTime: "2020-09-08 11:50:50" },
-  //             //   { userid:'3', operateContent: "测试3", username: "1", createTime: "2020-09-14 11:50:50" },
-  //             //   { userid:'4', operateContent: "测试4", username: "2", createTime: "2020-09-14 11:50:50" }
-  //             // ]
-  //             data,
-  //             total
-  //           },
-  //         }
-  //       }
-  //       res.send(result)
-  //     });
-  //   }
-  // })
-})
-
-//test接口
-app.get('/list/product', function (req, res) {
-  let result = {
-    code: 0,
-    msg: 'ok',
-    data: {
-      "name": "huawei",
-      "price": "1999",
-      "title": "huawei huawei huawei",
-      "id": "1"
+  let params = JSON.parse(req.query.data)
+  params = params.keyword == null ? {} : { username:params.keyword }
+  db.find(params,(err,ret)=>{
+    if (err) return result = err
+    result = {
+      code: 0,
+      msg: 'ok',
+      data:{
+        data: ret,
+        total: ret.length
+      }
     }
-  }
-  res.send(result)
+    res.send(result);
+  })
 })
 
 //定义端口，此处所用为3000端口，可自行更改

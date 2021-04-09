@@ -12,7 +12,7 @@
     </header>
     <main class="home-container">
       <CommTable
-      :tableData="tableData"
+      :tableData="tableData.slice((pageObj.currentPage - 1)*pageObj.size,pageObj.currentPage*pageObj.size)"
       :columns="columns"
       :pageObj="pageObj"
       :ButtonLeft="ButtonLeft"
@@ -48,7 +48,7 @@
             icon="el-icon-info"
             iconColor="red"
             title="确定删除吗？"
-            @onConfirm="deleteRow(scope.row.userid)"
+            @onConfirm="deleteRow(scope.row._id)"
           >
             <el-button type="danger" size="mini" slot="reference">删除</el-button>
           </el-popconfirm>
@@ -69,9 +69,17 @@
         </el-form-item>
         <el-form-item label="操作人">
           <el-select v-model="form.username" placeholder="请选择操作人">
-            <el-option label="lrl" :value="1"></el-option>
-            <el-option label="test" :value="2"></el-option>
+            <el-option label="lrl" value="1"></el-option>
+            <el-option label="test" value="2"></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="操作时间">
+          <el-date-picker
+            v-model="form.createTime"
+            type="date"
+            format="yyyy-MM-dd"
+            placeholder="选择日期时间">
+          </el-date-picker>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSave(dialogTitle)">确认</el-button>
@@ -98,8 +106,8 @@ export default {
   name: "eltable",
   data() {
     let caseState = [
-      { label: "lrl", value: 1 },
-      { label: "test", value: 2 }
+      { label: "lrl", value: '1' },
+      { label: "test", value: '2' }
     ];
     let entrustProps = { label: "label", value: "value" };
     return {
@@ -204,6 +212,7 @@ export default {
   methods: {
     //搜索/重置
     search(val){
+      self.pageObj.currentPage = 1
       self.getTableList(val);
     },
     //获取列表数据
@@ -265,6 +274,7 @@ export default {
         self.form = {
           operateContent: "",
           username: "",
+          createTime: ""
         };
       }
       self.dialogTitle = title;
@@ -272,10 +282,11 @@ export default {
     },
     //确认新增或确认编辑
     onSave(title) {
-      let { operateContent, username } = self.form;
+      let { operateContent, username, createTime } = self.form;
       let obj = {
         operateContent,
         username,
+        createTime
       };
       if (title === "新增") {
         self.$api.tableApi.tableAdd(obj).then((res) => {
@@ -289,8 +300,8 @@ export default {
           }
         });
       } else {
-        let { userid } = self.form;
-        obj.userid = userid;
+        let { _id } = self.form;
+        obj._id = _id;
         self.$api.tableApi.tableUpdata(obj).then((res) => {
           if (res) {
             self.getTableList();
@@ -316,8 +327,8 @@ export default {
       }
     },
     //删除
-    deleteRow(userid) {
-      self.$api.tableApi.tableDelete({ userid }).then((res) => {
+    deleteRow(_id) {
+      self.$api.tableApi.tableDelete({ _id }).then((res) => {
         if (res) {
           self.getTableList();
           self.$message({
@@ -337,7 +348,7 @@ export default {
       } else {
         let ids = [];
         self.selectList.forEach((i) => {
-          ids.push(i.userid);
+          ids.push(i._id);
         });
         self
           .$confirm("此操作将永久删除该数据, 是否继续?", "提示", {

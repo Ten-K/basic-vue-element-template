@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "mysql": "^2.18.1",
+    "nedb": "^1.8.0",
     "nodejs-websocket": "^1.7.2"
   }
 }
