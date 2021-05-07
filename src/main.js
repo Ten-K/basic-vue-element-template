@@ -4,7 +4,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'default-passive-events'
 import store from '@/store'
 import App from './App.vue'
-import router from './router'
+import router,{ resetRouter } from './router'
 import _ from '@/utils'
 import '@/utils/directive'
 import api from '@/api'
@@ -20,7 +20,8 @@ router.beforeEach(async(to, from, next) => {
   if(whiteList.includes(to.path)){
     next()
   }else{
-    if(!to.matched.length && !store.state.modulePermission.hasPermission){//没有权限
+    if(!store.state.modulePermission.hasPermission){//没有权限
+      resetRouter() //重置路由
       let newRoute = await store.dispatch('getNewRoute')
       //动态添加路由
       router.addRoutes(newRoute)

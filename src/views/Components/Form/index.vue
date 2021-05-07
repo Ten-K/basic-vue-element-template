@@ -1,6 +1,5 @@
 <!-- commForm组件测试 -->
 <template>
-  <div class="baseInfo">
     <CommForm
       class="searchInput"
       labelWidth="100px"
@@ -9,7 +8,6 @@
       :searchForm="searchForm"
       @search="search"
     />
-  </div>
 </template>
 <script>
 let self

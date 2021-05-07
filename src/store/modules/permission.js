@@ -1,10 +1,11 @@
 import api from '@/api'
 import { asyncRoute } from '../../router'
+import _ from '@/utils'
 import baseMenu from '../../assets/js/menu'
-const getAuth = (menuList)=>{
+const getAuth = (authList)=>{
   let auths = []
-  menuList.forEach(m => {
-    auths.push(m.auth)
+  authList.forEach(auth => {
+    auths.push(auth)
   })
   return auths
 }
@@ -20,6 +21,7 @@ const getMenu = (baseMenu,auths)=>{
   return menu
 }
 const formatList = (asyncRoute,auths)=>{
+  auths = ['/index','/home',...auths] //因为router.addRoutes只能添加一级路由,故将子路由嵌套在一级路由进行动态添加
   return asyncRoute.filter(route =>{
     if(auths.includes(route.path)){
       if(route.children){
@@ -43,8 +45,10 @@ export default {
     }
   },
   actions: {
-    async getNewRoute({commit,dispatch}){
-      let { data } = await api.loginApi.roleAuth() //获取权限列表
+    //TODO 获取登录用户
+    async getNewRoute({commit}){
+      let username = _.get('username')
+      let { data } = await api.loginApi.roleAuth({ username }) //获取权限列表
       let auths = getAuth(data)
       let menu = getMenu(baseMenu,auths)
       commit('setMenuList',menu)

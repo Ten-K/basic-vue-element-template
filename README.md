@@ -15,7 +15,9 @@
     |   |-- favicon.ico
     |   |-- index.html
     |-- server  //后台代码
+    |   |-- data //nedb数据库
     |   |-- app.js  //本地服务器
+    |   |-- mysql.js  //本地服务器+mysql数据库(已废弃)
     |   |-- package.json
     |-- src
         |-- App.vue //根组件
@@ -53,9 +55,9 @@
         |-- store  //Vuex
         |   |-- index.js
         |   |-- modules
-        |       |-- loading.js
-        |       |-- pagesTab.js
-        |       |-- permission.js
+        |       |-- loading.js //页面loading管理
+        |       |-- pagesTab.js //tab栏管理
+        |       |-- permission.js //权限管理
         |-- utils  
         |   |-- index.js  //函数工具库
         |   |-- request.js  //http请求
@@ -89,7 +91,7 @@
 ```
 
 ## 启动本地服务器
-server文件：本地服务器。用于模拟接口。  
+server文件：本地服务器。用于模拟接口。
 在server文件下  
 使用:
 ```
@@ -116,10 +118,11 @@ node app
     1. v-enterJump:  用于回车跳转到下一个输入框  (不能跳转时间控件);
     2. v-focus:  用于进入页面聚焦到某一个输入框.
 6. 根据权限动态加载路由及菜单
+7. 引入嵌入式数据库nedb,table页可增删改查
 ## 相关页面
 ![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104103956859-1399111189.png)  
 ![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104104826137-276690659.png)  
-![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104104919825-1182010930.png)
+![](https://img2020.cnblogs.com/blog/1467361/202104/1467361-20210420163132508-2071634342.png)
 
 ## 安装依赖
 ```

@@ -6,7 +6,6 @@ import createPersistedState from "vuex-persistedstate"
 import modulePagesTab from '@/store/modules/pagesTab'
 import moduleLoading from '@/store/modules/loading'
 import modulePermission from '@/store/modules/permission'
-import moduleCount from '@/store/modules/count'
 
 export default new Vuex.Store({
   state: {
@@ -37,7 +36,6 @@ export default new Vuex.Store({
     modulePagesTab,
     moduleLoading,
     modulePermission
-    // moduleCount
   },
   plugins: [createPersistedState({
     storage: window.sessionStorage

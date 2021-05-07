@@ -2,7 +2,7 @@
 <template>
   <div class="home">
     <header class="home-header">
-      <Header :isCollapse="isCollapse" @onclickCollapse="onclickCollapse" />
+      <Header :isCollapse="isCollapse" @onclickCollapse="onclickCollapse" @editableTabsValueFunc="editableTabsValueFunc"/>
     </header>
     <main class="home-main">
       <aside class="home-aside">
@@ -36,7 +36,7 @@
           </el-breadcrumb-item>
         </el-breadcrumb> -->
         <keep-alive>
-          <router-view/>
+          <router-view class="view-wraaper"/>
         </keep-alive>
       </article>
     </main>
@@ -87,13 +87,17 @@ export default {
     }
   },
   methods: {
+    //点击首页图标
+    editableTabsValueFunc(){
+      this.editableTabsValue = '/home'
+    },
     //控制菜单栏的收缩/展开
     onclickCollapse(headerIsCollapse) {
       this.isCollapse = headerIsCollapse;
     },
     // 查找菜单
     searchMenu (arr, key) {
-        arr.forEach(v => {
+      arr.forEach(v => {
         if (v.href === key) {
           let obj = {
             title: v.title,
@@ -181,6 +185,9 @@ export default {
         .close-tabs:hover {
           color: #409EFF;
         }
+      }
+      .view-wraaper{
+        overflow: auto;height: calc(100% - 55px);
       }
       .home-article-breadcrumb{
         padding: 3px 0 3px 5px;

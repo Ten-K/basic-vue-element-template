@@ -4,7 +4,8 @@ let basicApi = {
   Login:'login',
   // get my info
   UserInfo: 'user/info',
-  RoleAuth: 'roleAuth'
+  RoleAuth: 'roleAuth',
+  RoleAuthList: 'roleAuthList'
 }
 
 let loginApi ={
@@ -31,6 +32,14 @@ let loginApi ={
   roleAuth(data){
     return request({
       url: basicApi.RoleAuth,
+      method: 'post',
+      data
+    })
+  },
+
+  getRoleAuthList(data){
+    return request({
+      url: basicApi.RoleAuthList,
       method: 'post',
       data
     })

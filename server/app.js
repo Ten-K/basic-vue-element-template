@@ -10,6 +10,10 @@ const db = new nedb({
   filename: './data/save.db',
   autoload: true
 });
+const roleDb = new nedb({
+  filename: './data/role.db',
+  autoload: true
+});
 
 app.all('*', function (req, res, next) {//允许跨域
   res.header("Access-Control-Allow-Origin", "*");
@@ -29,7 +33,8 @@ app.post('/login', function (req, res) {
   });
   req.on('end', function () {
     data = JSON.parse(data)
-    if (data.username == '123' && data.password == '123') {
+    username = data.username
+    if (data.username == 'admin' && data.password == 'admin') {
       result = {
         code: 0,
         msg: 'ok',
@@ -44,28 +49,49 @@ app.post('/login', function (req, res) {
   })
 });
 
-//权限设置
+//当前用户权限
 app.post('/roleAuth',(req, res)=>{
-  let result = {
-    code: 0,
-    msg: 'ok',
-    data: {
-      data: [
-        { id:'0', name: "index", pid: '-1', auth:'/index' },
-        { id:'1', name: "home", pid: '0', auth:'/home' },
-        { id:'2', name: "components", pid: '0', auth:'/components' },
-        { id:'3', name: "Table", pid: '2', auth:'/components/table' },
-        { id:'4', name: "Form", pid: '2', auth:'/components/form' },
-        { id:'5', name: "Export", pid: '2', auth:'/components/export' },
-        { id:'6', name: "verificationCode", pid: '2', auth:'/components/verificationCode' },
-        { id:'7', name: "enterJump", pid: '0', auth:'/enterjump' },
-        { id:'8', name: "simulationVuex", pid: '0', auth:'/simulationVuex' },
-        { id:'9', name: "webSocket", pid: '0', auth:'/ws' },
-        { id:'10', name: "echarts", pid: '0', auth:'/echarts' }
-      ]
-    },
-  }
-  res.send(result) 
+  let data = '';
+  let result
+  req.on('data', function (chunk) {
+    data += chunk;
+  });
+  req.on('end', function () {
+    let { username } = JSON.parse(data)
+    roleDb.find({ username },(err, ret) => {
+      if (err) return result = err
+      result = {
+        code: 0,
+        msg: 'ok',
+        data:{
+          data: ret[0].list
+        }
+      }
+      res.send(result);
+    })
+  })
+})
+
+//权限列表
+app.post('/roleAuthList',(req, res)=>{
+  let data = '';
+  let result
+  req.on('data', function (chunk) {
+    data += chunk;
+  });
+  req.on('end', function () {
+    roleDb.find({},(err, ret) => {
+      if (err) return result = err
+      result = {
+        code: 0,
+        msg: 'ok',
+        data:{
+          data: ret
+        }
+      }
+      res.send(result);
+    })
+  })
 })
 
 //table模块新增
@@ -161,7 +187,7 @@ app.post('/table/deletes', function (req, res) {
 app.get('/table/list', function (req, res) {
   let params = JSON.parse(req.query.data)
   params = params.keyword == null ? {} : { username:params.keyword }
-  db.find(params,(err,ret)=>{
+  db.find(params).sort({createTime: -1}).exec(function (err, ret) {
     if (err) return result = err
     result = {
       code: 0,
@@ -172,7 +198,19 @@ app.get('/table/list', function (req, res) {
       }
     }
     res.send(result);
-  })
+  });
+  // db.find(params,(err,ret)=>{
+  //   if (err) return result = err
+  //   result = {
+  //     code: 0,
+  //     msg: 'ok',
+  //     data:{
+  //       data: ret,
+  //       total: ret.length
+  //     }
+  //   }
+  //   res.send(result);
+  // })
 })
 
 //定义端口，此处所用为3000端口，可自行更改

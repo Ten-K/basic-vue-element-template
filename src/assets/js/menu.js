@@ -45,6 +45,11 @@ const menu = [
     icon: "el-icon-menu",
     path: "echarts",
     title: "echarts",
+  },
+  {
+    icon: "el-icon-menu",
+    path: "permission",
+    title: "permission",
   }
 ]
 

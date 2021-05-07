@@ -12,10 +12,10 @@
         v-enterJump
       >
         <el-form-item label="账号" prop="username">
-          <el-input v-model="ruleForm.username" placeholder="123" @keyup.enter.native="submitForm('ruleForm')" v-focus></el-input>
+          <el-input v-model="ruleForm.username" placeholder="admin" @keyup.enter.native="submitForm('ruleForm')" v-focus></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="ruleForm.password" placeholder="123" @keyup.enter.native="submitForm('ruleForm')"></el-input>
+          <el-input v-model="ruleForm.password" placeholder="admin" @keyup.enter.native="submitForm('ruleForm')"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="login" @click="submitForm('ruleForm')">登录</el-button>
@@ -62,7 +62,7 @@ export default {
     submitForm(formName) {
         self.$refs[formName].validate((valid) => {
           if (valid) {
-            if(self.ruleForm.username == 123 && self.ruleForm.password == 123){
+            if(self.ruleForm.username == 'admin' && self.ruleForm.password == 'admin'){
               let obj ={
                 username: self.ruleForm.username,
                 password: self.ruleForm.password

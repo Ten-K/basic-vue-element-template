@@ -43,10 +43,13 @@ export default {
     },
     goHome(){
       this.$router.push('/home')
+      this.$emit('editableTabsValueFunc')
     },
     loginOut(){
       this.$_.remove('infolist')
+      this.$_.remove('editableTabsValue')
       this.$store.dispatch('changePermission', false)
+      this.$store.commit('clearTag')
       this.$router.push('/login')
     }
   },
