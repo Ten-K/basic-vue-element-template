@@ -3,12 +3,12 @@
     <el-dialog
       :title="title"
       :visible.sync="visible"
-      @close="$emit('update:show', false)"
+      @close="$emit('update:show', false);$emit('closeDialogFunc')"
       :show="show"
     >
       <slot></slot>
       <span slot="footer" class="dialog-footer" v-if="isShowFooter">
-        <el-button @click="visible = false">取 消</el-button>
+        <el-button @click="closeDialog">取 消</el-button>
         <el-button type="primary" @click="onConfirm">{{onConfirmBtnName}}</el-button>
       </span>
     </el-dialog>
@@ -49,5 +49,11 @@ export default {
       this.visible = this.show;
     },
   },
+  methods: {
+    closeDialog(){
+      this.$emit('close-dialog-func')
+      this.visible = false
+    },
+  }
 };
 </script>

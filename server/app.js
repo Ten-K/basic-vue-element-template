@@ -94,6 +94,27 @@ app.post('/roleAuthList',(req, res)=>{
   })
 })
 
+//编辑用户权限
+app.post('/update/roleAuth',(req, res)=>{
+  let postdata = '';
+  let result
+  req.on('data', function (chunk) {
+    postdata += chunk;
+  });
+  req.on('end', function () {
+    postdata = JSON.parse(postdata)
+    let {_id,list} = postdata
+    roleDb.update({_id},{$set:{list}}, (err, ret) => {
+      if (err) return result = err
+      result = {
+        code: 0,
+        msg: 'ok',
+      }
+      res.send(result);
+    });
+  })
+})
+
 //table模块新增
 app.post('/table/add', function (req, res) {
   let postdata = '';
