@@ -84,6 +84,8 @@
             |   |-- index.vue
             |-- Login
             |   |-- index.vue
+            |-- Permission
+            |   |-- index.vue
             |-- SimulationVuex
             |   |-- index.vue
             |-- Websocket
@@ -118,7 +120,7 @@ node app
     1. v-enterJump:  用于回车跳转到下一个输入框  (不能跳转时间控件);
     2. v-focus:  用于进入页面聚焦到某一个输入框.
 6. 根据权限动态加载路由及菜单
-7. 引入嵌入式数据库nedb,table页可增删改查
+7. 引入嵌入式数据库nedb,table页可增删改查,Permission页可编辑权限（编辑admin权限后重新登录可看见第6条功能效果）
 ## 相关页面
 ![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104103956859-1399111189.png)  
 ![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104104826137-276690659.png)  
