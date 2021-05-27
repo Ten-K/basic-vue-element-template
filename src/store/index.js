@@ -9,7 +9,10 @@ import modulePermission from '@/store/modules/permission'
 
 export default new Vuex.Store({
   state: {
-    count: 0
+    count: 0,
+    settings:{
+      theme: ''
+    }
   },
   getters: {
     getCount(state) {

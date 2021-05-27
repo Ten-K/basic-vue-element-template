@@ -8,7 +8,8 @@
         <i class="el-icon-s-home home-icon G-mgl-5" @click="goHome" title="首页"></i>
       </div>
       <div class="G-center">
-        <div class="G-mgr-5">{{username}}</div>
+        <ThemePicker class="theme-center"/>
+        <div class="G-mgr-5  G-mgl-5">{{username}}</div>
         <div class="login-out" @click="loginOut">退出登录</div>
       </div>
     </div>
@@ -16,8 +17,12 @@
 </template>
 
 <script>
+import ThemePicker from '@/components/ThemePicker';
 export default {
   name: "herder",
+  components:{
+    ThemePicker
+  },
   props:{
     isCollapse:{
       type:Boolean,

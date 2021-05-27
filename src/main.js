@@ -8,6 +8,7 @@ import router,{ resetRouter } from './router'
 import _ from '@/utils'
 import '@/utils/directive'
 import api from '@/api'
+import './element-variables.scss'
 
 Vue.use(ElementUI);
 

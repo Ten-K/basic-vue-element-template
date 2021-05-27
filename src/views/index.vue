@@ -46,7 +46,7 @@
 <script>
 import Sideber from "@/components/Sideber";
 import Header from "@/components/Header";
-import tabsBus from '../assets/js/tabsEventBus'
+import tabsBus from '../assets/js/tabsEventBus';
 export default {
   name: "home",
   components: {
