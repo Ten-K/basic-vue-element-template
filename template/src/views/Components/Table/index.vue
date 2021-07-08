@@ -48,7 +48,7 @@
             icon="el-icon-info"
             iconColor="red"
             title="确定删除吗？"
-            @onConfirm="deleteRow(scope.row._id)"
+            @confirm="deleteRow(scope.row._id)"
           >
             <el-button type="danger" size="mini" slot="reference">删除</el-button>
           </el-popconfirm>

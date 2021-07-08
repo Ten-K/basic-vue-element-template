@@ -1,20 +1,12 @@
 import axios from 'axios'
 import store from '@/store'
 import { Message } from "element-ui";
-// 配置axios的默认URL
 const service = axios.create({
+  baseURL: '/',
   headers: {
     'Content-Type': 'application/json;charset=utf-8'
   }
 })
-//可根据开发环境去设置基础地址
-if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = '/http://localhost:8080/'
-} else if (process.env.NODE_ENV === 'test') {
-  axios.defaults.baseURL = '/xxx/'
-} else {
-  axios.defaults.baseURL = '/xxx/'
-}
 // 配置允许跨域携带cookie
 axios.defaults.withCredentials = true
 // 配置超时时间
