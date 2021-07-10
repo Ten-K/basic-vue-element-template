@@ -7,7 +7,7 @@
         :class="[item.type, 'msg-item']"
         :key="index"
       >
-        <p>{{ item.content }}</p>
+        <p @click="audioPlay(item.content)">{{ item.content }}</p>
       </div>
     </div>
     <el-input
@@ -18,6 +18,7 @@
       placeholder="回车发送消息"
     ></el-input>
     <el-button @click="sendText">发送</el-button>
+    <p class="G-mgt-5" style="color: red">tip：点击聊天记录的文字以语音的形式播放</p>
   </div>
 </template>
 
@@ -40,6 +41,15 @@ export default {
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
   methods: {
+    //语音播报
+    audioPlay(text){
+			let url = `http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=2&text=${encodeURI(
+				text
+			)}`
+			let n = new Audio(url)
+			n.src = url
+			n.play()
+    },
     //发送聊天信息
     sendText() {
       if (self.$_.isEmptyObject(self.contentText)) return self.$message.info('不能发送空白信息');
@@ -50,7 +60,7 @@ export default {
     },
     backText(callback) {
       if (window.WebSocket) {
-        let ws = new WebSocket("ws://localhost:8001");
+        let ws = new WebSocket("ws://47.103.32.42:8001");
         ws.onopen = function (e) {
           console.log("连接服务器成功");
           ws.send(self.contentText);

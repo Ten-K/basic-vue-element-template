@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 import { Message } from "element-ui";
 const service = axios.create({
-  baseURL: '/',
+  baseURL: 'http://47.103.32.42:8081/',
   headers: {
     'Content-Type': 'application/json;charset=utf-8'
   }
