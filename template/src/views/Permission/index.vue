@@ -131,9 +131,7 @@ export default {
     handleNodeCheck() {
       // 全选 getCheckedKeys()
       // 半选 getHalfCheckedKeys()
-      let res = this.$refs.tree
-        .getCheckedKeys()
-        .concat(this.$refs.tree.getHalfCheckedKeys())
+      let res = this.$refs.tree.getCheckedKeys()
       this.roleAuthList = res
     },
     newOrEditDialog(text, tableItem) {
