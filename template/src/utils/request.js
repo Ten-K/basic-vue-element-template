@@ -2,13 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 import { Message } from 'element-ui'
 
-// 配置允许跨域携带cookie
-axios.defaults.withCredentials = true
-// 配置超时时间
-axios.defaults.timeout = 10000
-
 const service = axios.create({
-	baseURL: '/',
 	headers: {
 		'Content-Type': 'application/json;charset=utf-8',
 	},
@@ -16,6 +10,15 @@ const service = axios.create({
 	retryDelay: 1000,  //再次发起请求间隔
   timeout: 10000 //超时时间
 })
+
+//可根据开发环境去设置基础地址
+if (process.env.NODE_ENV === 'development') {
+  service.defaults.baseURL = '/'
+} else if (process.env.NODE_ENV === 'test') {
+  service.defaults.baseURL = '/xxx/'
+} else {
+  service.defaults.baseURL = 'http://47.103.32.42:8081/'
+}
 
 // 配置请求拦截
 service.interceptors.request.use(
