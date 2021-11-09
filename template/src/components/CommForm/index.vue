@@ -49,10 +49,10 @@
         >
           <el-option
             v-for="op in item.options"
-            :label="op.label"
-            :value="op.value"
-            :key="op.value"
-          >{{ op.label }}</el-option>
+            :label="op[item.props.label]"
+            :value="op[item.props.value]"
+            :key="op[item.props.value]"
+          >{{ op[item.props.label] }}</el-option>
         </el-select>
 
         <!-- 单选 -->
