@@ -1,6 +1,9 @@
 <!-- ctrl + shift + v 预览md文件  mddir生成目录结构-->
 
+test
+
 ## 目录
+
 ```
 |-- server  //后台代码
     |-- data //nedb数据库
@@ -95,68 +98,83 @@
 ```
 
 ## 服务器
+
 已默认启用线上服务器，如需启动本地服务器，按如下步骤操作：
-server文件夹：本地服务器。用于模拟接口。
-在server文件夹下  
+server 文件夹：本地服务器。用于模拟接口。
+在 server 文件夹下  
 使用:
+
 ```
 npm install
 ```
+
 启动本地服务器
+
 ```
 node app
-```  
+```
+
 vue.config.js
+
 ```
 //target: 'http://47.103.32.42:8081/',         // 线上服务器端接口地址
 target: 'http://localhost:3000/', // 本地服务器端接口地址
 ```
 
 ## 功能
-1. components文件夹组件说明:
-    1. CommDialog组件的目的。利用一个组件解决单页面多个弹窗的问题;
-    2. CommForm表单组件。自带搜索和重置按钮,只需传入搜索函数即完成搜索和重置按钮的功能;
-    3. CommTable附带上方添加从左右两边开始的按钮及下方添加分页组件的功能(可控制序号列,勾选列,合并行以及自定义操作列);
-    4. ExportExcel可将json数据导出成excel并合并单元格;
-    5. ExportPdf具有html转pdf并下载的功能。支持分页,标注页脚(少量pdf导出可由前端实现,如果量大不建议前端实现导出);
-    6. Header公共头部;
-    7. Sideber利用递归组件实现多级菜单.
-2. 封装axios并挂载到vue实例上全局使用,具有请求拦截,响应拦截和默认loading功能,如需要loading,可在api文件夹下对应的文件里的请求参数加入loading:true;
-3. 在vue.config.js文件配置了反向代理用于解决跨域问题;
-4. 简易的Websocket聊天窗功能
+
+1. components 文件夹组件说明:
+   1. CommDialog 组件的目的。利用一个组件解决单页面多个弹窗的问题;
+   2. CommForm 表单组件。自带搜索和重置按钮,只需传入搜索函数即完成搜索和重置按钮的功能;
+   3. CommTable 附带上方添加从左右两边开始的按钮及下方添加分页组件的功能(可控制序号列,勾选列,合并行以及自定义操作列);
+   4. ExportExcel 可将 json 数据导出成 excel 并合并单元格;
+   5. ExportPdf 具有 html 转 pdf 并下载的功能。支持分页,标注页脚(少量 pdf 导出可由前端实现,如果量大不建议前端实现导出);
+   6. Header 公共头部;
+   7. Sideber 利用递归组件实现多级菜单.
+2. 封装 axios 并挂载到 vue 实例上全局使用,具有请求拦截,响应拦截和默认 loading 功能,如需要 loading,可在 api 文件夹下对应的文件里的请求参数加入 loading:true;
+3. 在 vue.config.js 文件配置了反向代理用于解决跨域问题;
+4. 简易的 Websocket 聊天窗功能
 5. 已有全局指令:
-    1. v-enterJump:  用于回车跳转到下一个输入框  (不能跳转时间控件);
-    2. v-focus:  用于进入页面聚焦到某一个输入框.
+   1. v-enterJump: 用于回车跳转到下一个输入框 (不能跳转时间控件);
+   2. v-focus: 用于进入页面聚焦到某一个输入框.
 6. 根据权限动态加载路由及菜单
-7. 引入嵌入式数据库nedb,table页可增删改查,Permission页可编辑权限（编辑admin权限后重新登录可看见第6条功能效果）
+7. 引入嵌入式数据库 nedb,table 页可增删改查,Permission 页可编辑权限（编辑 admin 权限后重新登录可看见第 6 条功能效果）
+
 ## 相关页面
+
 ![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104103956859-1399111189.png)  
 ![](https://img2020.cnblogs.com/blog/1467361/202011/1467361-20201104104826137-276690659.png)  
 ![](https://img2020.cnblogs.com/blog/1467361/202104/1467361-20210420163132508-2071634342.png)
 ![](https://gitee.com/Ruilin0829/my_pic_bed/raw/master/img/20210617104340.png)
 
 ## 安装依赖
+
 ```
 npm install
 ```
 
 ### 启动项目
+
 ```
 npm run serve
 ```
 
 ### 项目打包
+
 ```
 npm run build
 ```
 
 ### 检查代码书写格式(eslint 检查)
+
 ```
 npm run lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Tip
-  菜单使用递归组件故无法使用$emit传值给父组件(本项目使用eventBus实现传值)
+
+菜单使用递归组件故无法使用$emit 传值给父组件(本项目使用 eventBus 实现传值)
