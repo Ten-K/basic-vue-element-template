@@ -1,6 +1,6 @@
 // vue.config.js
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 module.exports = {
 	configureWebpack: (config) => {
 		if (process.env.NODE_ENV === 'production') {
@@ -30,7 +30,7 @@ module.exports = {
 				})
 			)
 			//webpack打包分析
-			config.plugins.push(new BundleAnalyzerPlugin())
+			// config.plugins.push(new BundleAnalyzerPlugin())
 			// 公共代码抽离
 			config.optimization = {
 				splitChunks: {
